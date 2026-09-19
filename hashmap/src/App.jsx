@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import './App.css';
 import StepSidebar from './components/StepSidebar';
+import PythonConsole from './components/PythonConsole';
 import Step1Intro from './components/steps/Step1Intro';
 import Step2HashFunction from './components/steps/Step2HashFunction';
 import Step3Insertion from './components/steps/Step3Insertion';
@@ -73,52 +74,69 @@ function App() {
 
       <main className="main-pane">
         <header className="main-pane__header">
-          <span className="main-pane__eyebrow">
-            Step {currentMeta.id} of {TOTAL_STEPS}
-          </span>
+          <div className="main-pane__header-left">
+            <span className="main-pane__eyebrow">
+              Milestone {currentMeta.id} of {TOTAL_STEPS} • {currentMeta.concept}
+            </span>
+            <h1 className="main-pane__title">{currentMeta.title}</h1>
+          </div>
+          <div className="main-pane__progress-badge">
+            <span>{Math.round((completedSteps.length / TOTAL_STEPS) * 100)}% Completed</span>
+          </div>
         </header>
 
-        {currentStep === 1 && <Step1Intro onContinue={() => completeAndAdvance(1)} />}
+        <div className="workbench-layout">
+          <div className="workbench-narrative">
+            {currentStep === 1 && <Step1Intro onContinue={() => completeAndAdvance(1)} />}
 
-        {currentStep === 2 && (
-          <Step2HashFunction onBack={() => goBack(2)} onContinue={() => completeAndAdvance(2)} />
-        )}
+            {currentStep === 2 && (
+              <Step2HashFunction
+                onBack={() => goBack(2)}
+                onContinue={() => completeAndAdvance(2)}
+              />
+            )}
 
-        {currentStep === 3 && (
-          <Step3Insertion
-            buckets={buckets}
-            onInsert={handleInsert}
-            onBack={() => goBack(3)}
-            onContinue={() => completeAndAdvance(3)}
-          />
-        )}
+            {currentStep === 3 && (
+              <Step3Insertion
+                buckets={buckets}
+                onInsert={handleInsert}
+                onBack={() => goBack(3)}
+                onContinue={() => completeAndAdvance(3)}
+              />
+            )}
 
-        {currentStep === 4 && (
-          <Step4Collision
-            buckets={buckets}
-            onInsert={handleInsert}
-            onBack={() => goBack(4)}
-            onContinue={() => completeAndAdvance(4)}
-          />
-        )}
+            {currentStep === 4 && (
+              <Step4Collision
+                buckets={buckets}
+                onInsert={handleInsert}
+                onBack={() => goBack(4)}
+                onContinue={() => completeAndAdvance(4)}
+              />
+            )}
 
-        {currentStep === 5 && (
-          <Step5LookupDelete
-            buckets={buckets}
-            onDelete={handleDelete}
-            onBack={() => goBack(5)}
-            onContinue={() => completeAndAdvance(5)}
-          />
-        )}
+            {currentStep === 5 && (
+              <Step5LookupDelete
+                buckets={buckets}
+                onDelete={handleDelete}
+                onBack={() => goBack(5)}
+                onContinue={() => completeAndAdvance(5)}
+              />
+            )}
 
-        {currentStep === 6 && (
-          <Step6BigO
-            buckets={buckets}
-            onBack={() => goBack(6)}
-            onFinish={() => completeAndAdvance(6)}
-            isFinished={completedSteps.includes(6)}
-          />
-        )}
+            {currentStep === 6 && (
+              <Step6BigO
+                buckets={buckets}
+                onBack={() => goBack(6)}
+                onFinish={() => completeAndAdvance(6)}
+                isFinished={completedSteps.includes(6)}
+              />
+            )}
+          </div>
+
+          <div className="workbench-sidecar">
+            <PythonConsole stepId={currentStep} />
+          </div>
+        </div>
       </main>
     </div>
   );

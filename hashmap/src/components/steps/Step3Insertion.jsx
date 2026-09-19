@@ -1,15 +1,9 @@
 import { useState } from 'react';
 import { BUCKET_COUNT, computeHash, totalEntries } from '../../lib/hashmap';
+import { COURSE_PRESETS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import HashWorking from '../HashWorking';
 import StepFooter from '../StepFooter';
-
-const SUGGESTIONS = [
-  ['apple', '🍎'],
-  ['bat', '🦇'],
-  ['comet', '☄️'],
-  ['drum', '🥁']
-];
 
 export default function Step3Insertion({ buckets, onInsert, onBack, onContinue }) {
   const [key, setKey] = useState('');
@@ -29,36 +23,39 @@ export default function Step3Insertion({ buckets, onInsert, onBack, onContinue }
 
   return (
     <section className="step">
-      <h2>Filing entries</h2>
+      <div className="step-badge">Operation 1 • Insertion & Updates</div>
+      <h2>Enrolling Courses (Filing Entries)</h2>
+
       <p>
-        Filing a key-value pair is just: compute the drawer with the hash function, then drop the card
-        in that drawer. No searching required.
+        Now let's populate the IIT Ropar course registry. When you register a course in Python via{' '}
+        <code>registry["CS101"] = "Intro to AI"</code>, Python hashes the key, routes it directly to its
+        assigned slot, and stores the record in <strong>O(1) time</strong>.
       </p>
 
       <div className="field-row">
-        <label htmlFor="insert-key">Key</label>
+        <label htmlFor="insert-key">Course Code</label>
         <input
           id="insert-key"
           type="text"
           value={key}
           onChange={(event) => setKey(event.target.value)}
-          placeholder="e.g. apple"
+          placeholder="e.g. CS101"
           maxLength={24}
         />
       </div>
       <div className="field-row">
-        <label htmlFor="insert-value">Value</label>
+        <label htmlFor="insert-value">Course Details</label>
         <input
           id="insert-value"
           type="text"
           value={value}
           onChange={(event) => setValue(event.target.value)}
-          placeholder="e.g. 🍎"
-          maxLength={24}
+          placeholder="e.g. Intro to AI (4 Cr)"
+          maxLength={32}
         />
       </div>
 
-      <HashWorking computation={preview} emptyHint="Type a key and value, then file it." />
+      <HashWorking computation={preview} emptyHint="Enter a course code and title to see its memory slot." />
 
       <div className="button-row">
         <button
@@ -67,24 +64,40 @@ export default function Step3Insertion({ buckets, onInsert, onBack, onContinue }
           onClick={() => file(key, value)}
           disabled={!key.trim() || !value.trim()}
         >
-          File it
+          Enroll Course
         </button>
-        {SUGGESTIONS.map(([k, v]) => (
-          <button key={k} type="button" className="button button--ghost" onClick={() => file(k, v)}>
-            + {k}
+
+        <span className="preset-label">Quick Enroll:</span>
+        {COURSE_PRESETS.map((course) => (
+          <button
+            key={course.key}
+            type="button"
+            className="button button--ghost"
+            onClick={() => file(course.key, course.value)}
+          >
+            + {course.key}
           </button>
         ))}
       </div>
 
       <BucketWall buckets={buckets} highlightIndex={lastIndex} highlightVariant="insert" />
 
-      <p className="step-note">{filed === 0 ? 'The wall is still empty.' : `${filed} entr${filed === 1 ? 'y' : 'ies'} filed so far.`}</p>
+      <div className="callout callout--tip">
+        <strong>💡 Key Uniqueness in Python:</strong> Try enrolling <code>"CS101"</code> again with a new title.
+        Notice that Python updates the existing entry in place instead of creating duplicate keys!
+      </div>
+
+      <p className="step-note">
+        {filed === 0
+          ? 'The registry is currently empty.'
+          : `${filed} course${filed === 1 ? '' : 's'} registered in the active memory table.`}
+      </p>
 
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="What happens when two keys collide?"
-        hint={filed < 2 ? 'File at least a couple of entries to see the wall fill in.' : undefined}
+        continueLabel="What Happens When Keys Collide? →"
+        hint={filed < 2 ? 'Enroll at least two courses to see records in memory.' : undefined}
       />
     </section>
   );

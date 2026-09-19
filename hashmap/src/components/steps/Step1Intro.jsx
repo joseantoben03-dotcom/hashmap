@@ -7,21 +7,40 @@ const EMPTY_BUCKETS = createBuckets();
 export default function Step1Intro({ onContinue }) {
   return (
     <section className="step">
-      <h2>What is a hashmap?</h2>
+      <div className="step-badge">Engineering Case Study • IIT Ropar</div>
+      <h2>The Course Registry Bottleneck</h2>
+
       <p>
-        Picture a wall of numbered drawers, like a library card catalog or the pigeonholes in an old
-        post office. Every drawer has a number. When a letter arrives, the clerk doesn't search the
-        whole wall — a simple rule tells them exactly which drawer to open.
+        Imagine you are on the engineering team for the <strong>IIT Ropar Academic Portal</strong>.
+        During course registration week, thousands of students query course prerequisites and seat
+        availability simultaneously.
       </p>
+
+      <div className="case-callout">
+        <h4>🚨 The Production Issue:</h4>
+        <p>
+          Originally, course records were kept in a standard Python <code>list</code>. Looking up a course
+          like <code>"CS101"</code> required scanning one item after another from the start—an{' '}
+          <strong>O(n) linear scan</strong>. As the course catalog grew, the portal crashed under peak load.
+        </p>
+      </div>
+
       <p>
-        A hashmap works the same way. Each piece of data has a <strong>key</strong> (the name on the
-        envelope) and a <strong>value</strong> (what's inside). A <strong>hash function</strong> turns
-        the key into a drawer number, so storing and finding things takes roughly the same amount of
-        time whether the wall has 7 drawers or 7 million.
+        To solve this, we are upgrading the system to use a <strong>Hash Map</strong>—the core data
+        structure that powers <strong>Python Dictionaries (<code>dict</code>)</strong>.
       </p>
-      <p>Here's the wall you'll be filing all through this tutorial — empty for now.</p>
+
+      <p>
+        Instead of scanning through every course sequentially, a hash table uses direct memory addressing:
+        every piece of data has a <strong>Key</strong> (e.g. <code>"CS101"</code>) and a{' '}
+        <strong>Value</strong> (e.g. course title & credits). A <strong>hash function</strong> instantly
+        calculates the exact memory slot index, achieving <strong>O(1) constant-time access</strong>!
+      </p>
+
+      <p>Here is our initial memory allocation: 7 clean memory slots ready for course registration.</p>
       <BucketWall buckets={EMPTY_BUCKETS} />
-      <StepFooter onContinue={onContinue} continueLabel="Show me the hash function" />
+
+      <StepFooter onContinue={onContinue} continueLabel="Inspect the Hash Function →" />
     </section>
   );
 }

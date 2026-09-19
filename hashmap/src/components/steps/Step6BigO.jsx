@@ -2,9 +2,10 @@ import { totalEntries } from '../../lib/hashmap';
 import StepFooter from '../StepFooter';
 
 const ROWS = [
-  { op: 'Insert', average: 'O(1)', worst: 'O(n)' },
-  { op: 'Lookup', average: 'O(1)', worst: 'O(n)' },
-  { op: 'Delete', average: 'O(1)', worst: 'O(n)' }
+  { op: 'Insert (enroll)', average: 'O(1)', worst: 'O(n)', python: 'registry[code] = details' },
+  { op: 'Lookup (query)', average: 'O(1)', worst: 'O(n)', python: 'registry.get(code)' },
+  { op: 'Delete (drop)', average: 'O(1)', worst: 'O(n)', python: 'registry.pop(code, None)' },
+  { op: 'Contains check', average: 'O(1)', worst: 'O(n)', python: 'code in registry' }
 ];
 
 export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
@@ -12,46 +13,72 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
   return (
     <section className="step">
-      <h2>Complexity & recap</h2>
+      <div className="step-badge">Milestone Complete • Production Architecture</div>
+      <h2>Production Scale & Python Superpowers</h2>
+
       <p>
-        On average, keys spread out evenly across drawers, so each drawer holds only a handful of
-        cards - that's why insert, lookup, and delete are all considered <strong>O(1)</strong>, constant
-        time, regardless of how many entries are filed.
-      </p>
-      <p>
-        The worst case is a hashmap gone wrong: every key hashing to the <em>same</em> drawer, turning
-        the lookup into a full walk through one long chain - <strong>O(n)</strong>. Good hash functions
-        exist specifically to make that worst case vanishingly rare.
+        By replacing sequential lists with a hash-driven dictionary, the IIT Ropar registry now handles
+        thousands of concurrent lookups in <strong>O(1) constant time</strong>.
       </p>
 
       <table className="complexity-table">
         <thead>
           <tr>
             <th scope="col">Operation</th>
-            <th scope="col">Average case</th>
-            <th scope="col">Worst case</th>
+            <th scope="col">Average Case</th>
+            <th scope="col">Worst Case</th>
+            <th scope="col">Python Idiom</th>
           </tr>
         </thead>
         <tbody>
           {ROWS.map((row) => (
             <tr key={row.op}>
               <th scope="row">{row.op}</th>
-              <td><code>{row.average}</code></td>
-              <td><code>{row.worst}</code></td>
+              <td>
+                <code>{row.average}</code>
+              </td>
+              <td>
+                <code>{row.worst}</code>
+              </td>
+              <td>
+                <code>{row.python}</code>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
+      <div className="callout callout--tip">
+        <h4>🚀 Pythonic Superpowers in Standard Library:</h4>
+        <ul>
+          <li>
+            <strong><code>collections.defaultdict</code></strong>: Automatically creates default lists/sets
+            for grouping (e.g. grouping students by department without checking <code>if dept in d</code>).
+          </li>
+          <li>
+            <strong><code>collections.Counter</code></strong>: Instant frequency counts for enrollment numbers.
+          </li>
+          <li>
+            <strong>Dictionary Comprehensions</strong>:{' '}
+            <code>{`{k: v for k, v in data.items()}`}</code> for concise, readable transformations.
+          </li>
+          <li>
+            <strong>Guaranteed Insertion Order</strong>: Since Python 3.7+, dictionaries maintain key insertion
+            order by specification!
+          </li>
+        </ul>
+      </div>
+
       <p className="step-note">
-        Over this tutorial you filed {filed} entr{filed === 1 ? 'y' : 'ies'} across the wall - {' '}
-        {filed === 0 ? 'go back and try filing a few if you skipped that step.' : 'nicely done.'}
+        {filed === 0
+          ? 'You reviewed the architecture — try going back and enrolling courses to see them in memory.'
+          : `Great job! You registered ${filed} course record${filed === 1 ? '' : 's'} across the system.`}
       </p>
 
       <StepFooter
         onBack={onBack}
         onContinue={onFinish}
-        continueLabel={isFinished ? 'Recap complete' : 'Finish tutorial'}
+        continueLabel={isFinished ? 'Case Study Completed ✓' : 'Complete Case Study'}
       />
     </section>
   );
