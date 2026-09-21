@@ -7,8 +7,8 @@ export default function BucketWall({
   return (
     <div className="bucket-wall-container">
       <div className="bucket-wall__meta">
-        <span className="bucket-wall__title">Memory Slots / Hash Buckets (Table Size: {buckets.length})</span>
-        <span className="bucket-wall__hint">Direct-indexed memory addresses</span>
+        <span className="bucket-wall__title">Community Relief Shelves (7 Fixed Slots)</span>
+        <span className="bucket-wall__hint">Direct-assigned shelf locations</span>
       </div>
       <div className="bucket-wall" role="list" aria-label="Hashmap buckets">
         {buckets.map((bucket, index) => {
@@ -20,7 +20,7 @@ export default function BucketWall({
               className={`bucket${isHighlighted ? ` bucket--${highlightVariant}` : ''}`}
             >
               <div className="bucket__header">
-                <span className="bucket__index">Slot [{index}]</span>
+                <span className="bucket__index">Shelf #{index}</span>
                 <span className="bucket__count">{bucket.length}</span>
               </div>
 
@@ -35,7 +35,7 @@ export default function BucketWall({
                   >
                     <div className="bucket__card-top">
                       <span className="bucket__card-key">{entry.key}</span>
-                      {chainIdx > 0 && <span className="bucket__card-chain">chain #{chainIdx + 1}</span>}
+                      {chainIdx > 0 && <span className="bucket__card-chain">roommate #{chainIdx + 1}</span>}
                     </div>
                     <span className="bucket__card-value">{entry.value}</span>
                   </div>

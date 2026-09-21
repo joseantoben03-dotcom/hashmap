@@ -1,58 +1,46 @@
 import { useEffect, useState } from 'react';
-import { PYTHON_STEP_CONTENT } from '../data/caseStudy';
+import { PYTHON_GENTLE_LESSONS } from '../data/caseStudy';
 
 export default function PythonConsole({ stepId }) {
-  const stepContent = PYTHON_STEP_CONTENT[stepId] || PYTHON_STEP_CONTENT[1];
+  const lesson = PYTHON_GENTLE_LESSONS[stepId] || PYTHON_GENTLE_LESSONS[1];
 
-  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'explain' | 'quiz'
-  const [userCode, setUserCode] = useState(stepContent.pythonCode);
-  const [output, setOutput] = useState(stepContent.sampleOutput);
+  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'concept' | 'check'
+  const [code, setCode] = useState(lesson.snippet);
+  const [terminalOutput, setTerminalOutput] = useState(lesson.output);
   const [isRunning, setIsRunning] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
-  // Sync state when step changes
   useEffect(() => {
-    setUserCode(stepContent.pythonCode);
-    setOutput(stepContent.sampleOutput);
+    setCode(lesson.snippet);
+    setTerminalOutput(lesson.output);
     setSelectedOption(null);
     setQuizSubmitted(false);
-  }, [stepId, stepContent]);
+  }, [stepId, lesson]);
 
   function handleRun() {
     setIsRunning(true);
-    setOutput('Executing in Python 3.12 runtime...\n');
+    setTerminalOutput('Running in Python 3.12...\n');
 
     setTimeout(() => {
       setIsRunning(false);
-      // If code was customized or kept default, generate appropriate realistic Python output
-      if (userCode.includes('unhashable') || userCode.includes('bad_dict')) {
-        setOutput(
-          `Traceback (most recent call last):\n  File "campus_registry.py", line 12, in <module>\nTypeError: unhashable type: 'list'`
-        );
-      } else if (userCode.includes('KeyError') || userCode.includes('CS999')) {
-        setOutput(
-          `Traceback (most recent call last):\n  File "campus_registry.py", line 4, in <module>\nKeyError: 'CS999'`
-        );
-      } else {
-        setOutput(stepContent.sampleOutput);
-      }
-    }, 280);
+      setTerminalOutput(lesson.output);
+    }, 200);
   }
 
   function handleReset() {
-    setUserCode(stepContent.pythonCode);
-    setOutput(stepContent.sampleOutput);
+    setCode(lesson.snippet);
+    setTerminalOutput(lesson.output);
   }
 
   return (
-    <aside className="python-console" aria-label="Interactive Python Console">
+    <aside className="python-console" aria-label="Gentle Python Companion">
       <div className="python-console__header">
         <div className="python-console__badge">
           <span className="python-icon">🐍</span>
-          <span className="python-console__filename">campus_registry.py</span>
+          <span className="python-console__filename">volunteer_hub.py</span>
         </div>
-        <span className="python-console__tag">{stepContent.tag}</span>
+        <span className="python-console__tag">{lesson.concept}</span>
       </div>
 
       <div className="python-console__nav">
@@ -61,21 +49,21 @@ export default function PythonConsole({ stepId }) {
           className={`python-console__tab${activeTab === 'code' ? ' python-console__tab--active' : ''}`}
           onClick={() => setActiveTab('code')}
         >
-          Interactive Code
+          Try in Python
         </button>
         <button
           type="button"
-          className={`python-console__tab${activeTab === 'explain' ? ' python-console__tab--active' : ''}`}
-          onClick={() => setActiveTab('explain')}
+          className={`python-console__tab${activeTab === 'concept' ? ' python-console__tab--active' : ''}`}
+          onClick={() => setActiveTab('concept')}
         >
-          Under The Hood
+          Why Python Does This
         </button>
         <button
           type="button"
-          className={`python-console__tab${activeTab === 'quiz' ? ' python-console__tab--active' : ''}`}
-          onClick={() => setActiveTab('quiz')}
+          className={`python-console__tab${activeTab === 'check' ? ' python-console__tab--active' : ''}`}
+          onClick={() => setActiveTab('check')}
         >
-          Quick Challenge {quizSubmitted && selectedOption === stepContent.challenge.correctIndex ? '✓' : ''}
+          Quick Check {quizSubmitted && selectedOption === lesson.challenge.correctIndex ? '✓' : ''}
         </button>
       </div>
 
@@ -94,53 +82,56 @@ export default function PythonConsole({ stepId }) {
                   onClick={handleRun}
                   disabled={isRunning}
                 >
-                  {isRunning ? 'Running…' : '▶ Run Python'}
+                  {isRunning ? 'Running…' : '▶ Run Code'}
                 </button>
               </div>
             </div>
 
             <textarea
               className="python-code-editor"
-              value={userCode}
-              onChange={(e) => setUserCode(e.target.value)}
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
               spellCheck={false}
-              rows={11}
+              rows={9}
             />
 
             <div className="python-terminal">
               <div className="python-terminal__header">
-                <span>Terminal Output (Python 3.12)</span>
+                <span>Output Console</span>
               </div>
-              <pre className="python-terminal__output">{output}</pre>
+              <pre className="python-terminal__output">{terminalOutput}</pre>
+            </div>
+
+            <div className="mini-insight">
+              <strong>{lesson.oneLinerTitle}</strong> {lesson.oneLinerNote}
             </div>
           </div>
         )}
 
-        {activeTab === 'explain' && (
+        {activeTab === 'concept' && (
           <div className="python-console__pane python-console__explanation">
-            <h3>{stepContent.title}</h3>
-            <div className="explanation-text">
-              {stepContent.explanation.split('\n\n').map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
+            <h3>{lesson.title}</h3>
+            <p className="concept-explanation">{lesson.explanation}</p>
+
             <div className="callout callout--tip">
-              <strong>💡 Python Pro-Tip:</strong> In Python, the dictionary implementation is so fast and
-              optimized that the entire language runtime (modules, class attributes, global variables) is
-              internally driven by hash tables!
+              <strong>The Everyday Parallel:</strong>
+              <p>
+                Think of Python’s dictionary like an address book or coat-check token: you never
+                search from page 1 to the end. The label itself takes you straight to the person.
+              </p>
             </div>
           </div>
         )}
 
-        {activeTab === 'quiz' && (
+        {activeTab === 'check' && (
           <div className="python-console__pane python-console__quiz">
-            <h3>Concept Check</h3>
-            <p className="quiz-question">{stepContent.challenge.question}</p>
+            <h3>Friendly Check</h3>
+            <p className="quiz-question">{lesson.challenge.question}</p>
 
             <div className="quiz-options">
-              {stepContent.challenge.options.map((opt, idx) => {
+              {lesson.challenge.options.map((opt, idx) => {
                 const isSelected = selectedOption === idx;
-                const isCorrect = idx === stepContent.challenge.correctIndex;
+                const isCorrect = idx === lesson.challenge.correctIndex;
                 let optClass = 'quiz-option';
                 if (quizSubmitted) {
                   if (isCorrect) optClass += ' quiz-option--correct';
@@ -169,18 +160,18 @@ export default function PythonConsole({ stepId }) {
             {quizSubmitted && (
               <div
                 className={`quiz-feedback ${
-                  selectedOption === stepContent.challenge.correctIndex
+                  selectedOption === lesson.challenge.correctIndex
                     ? 'quiz-feedback--success'
                     : 'quiz-feedback--error'
                 }`}
               >
-                {selectedOption === stepContent.challenge.correctIndex ? (
+                {selectedOption === lesson.challenge.correctIndex ? (
                   <>
-                    <strong>✓ Excellent!</strong> {stepContent.challenge.feedback}
+                    <strong>✓ Exactly right!</strong> {lesson.challenge.feedback}
                   </>
                 ) : (
                   <>
-                    <strong>✕ Not quite.</strong> Review the code snippet in the "Interactive Code" tab and try again!
+                    <strong>✕ Not quite:</strong> Check the code tab again and give it another shot!
                   </>
                 )}
               </div>

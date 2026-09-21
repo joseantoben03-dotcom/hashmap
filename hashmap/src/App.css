@@ -224,7 +224,9 @@
   min-width: 0;
 }
 
-.step-badge {
+/* ---------- Storytelling Elements ---------- */
+
+.story-badge {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -238,65 +240,150 @@
   margin-bottom: 0.6rem;
 }
 
-.step h2 {
-  font-size: 1.7rem;
-  margin-bottom: 0.6rem;
+.story-headline {
+  font-size: 1.65rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
 }
 
-.step-note {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  margin-top: 0.8rem;
+.story-vignette {
+  margin-bottom: 1rem;
 }
 
-/* ---------- Case Callouts & Alerts ---------- */
-
-.case-callout {
-  background: var(--paper-raised);
-  border-left: 4px solid var(--rust);
-  padding: 0.9rem 1.1rem;
-  margin: 1.2rem 0;
-  border-radius: 0 4px 4px 0;
-}
-
-.case-callout h4 {
-  margin: 0 0 0.35rem;
+.story-text {
   font-size: 0.95rem;
-  color: var(--rust);
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  max-width: 58ch;
 }
 
-.case-callout p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.callout {
-  padding: 0.85rem 1rem;
-  border-radius: 4px;
+.story-quote {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--paper-raised);
+  border-left: 3px solid var(--brass);
+  padding: 0.85rem 1.1rem;
+  border-radius: 0 4px 4px 0;
   margin: 1.1rem 0;
-  font-size: 0.9rem;
+}
+
+.story-quote__mark {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  line-height: 0.8;
+  color: var(--brass);
+}
+
+.story-quote__text {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink);
+  margin: 0 0 0.35rem;
   line-height: 1.45;
 }
 
-.callout p {
-  margin: 0.3rem 0 0;
+.story-quote__speaker {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-weight: 500;
 }
 
-.callout--note {
-  background: var(--paper-raised);
-  border: 1px solid var(--border-strong);
-}
-
-.callout--tip {
+.story-insight {
   background: var(--teal-dim);
   border: 1px solid var(--teal);
-  color: #124039;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  color: #113e37;
+  line-height: 1.45;
+  margin: 1.2rem 0;
 }
 
-.callout--warning {
-  background: var(--rust-dim);
-  border: 1px solid var(--rust);
-  color: #631f15;
+.shelf-intro-text {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-top: 1.2rem;
+}
+
+/* Simulation card */
+.simulation-card {
+  background: var(--paper-raised);
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  margin: 1.1rem 0;
+}
+
+.simulation-card h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.simulation-prompt {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.simulation-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.simulation-counter {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--rust);
+}
+
+/* Social grid in recap */
+.section-subhead {
+  font-size: 1.05rem;
+  margin: 1.4rem 0 0.8rem;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.social-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.social-card__name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
+.social-card__desc {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.social-card__badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--teal);
+  background: var(--teal-dim);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  width: fit-content;
+  font-weight: 600;
 }
 
 /* ---------- Forms & Inputs ---------- */
@@ -309,7 +396,7 @@
 }
 
 .field-row label {
-  width: 7rem;
+  width: 7.5rem;
   font-size: 0.85rem;
   color: var(--ink-soft);
   font-weight: 500;
@@ -406,7 +493,7 @@
   color: var(--ink-soft);
 }
 
-/* ---------- Bucket Wall (Memory Slots) ---------- */
+/* ---------- Bucket Wall (Relief Shelves) ---------- */
 
 .bucket-wall-container {
   margin: 1.4rem 0;
@@ -434,7 +521,7 @@
 
 .bucket-wall {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
   gap: 0.6rem;
 }
 
@@ -485,7 +572,7 @@
   color: var(--ink-soft);
   font-style: italic;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
 
 .bucket__card {
@@ -554,36 +641,33 @@
   background: var(--rust-dim);
 }
 
-/* ---------- Complexity Table ---------- */
-
-.complexity-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1.2rem 0;
-  font-size: 0.88rem;
-  background: var(--paper-raised);
+/* Callouts */
+.callout {
+  padding: 0.85rem 1rem;
   border-radius: 4px;
-  overflow: hidden;
+  margin: 1.1rem 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
-.complexity-table th,
-.complexity-table td {
-  border-bottom: 1px solid var(--border);
-  padding: 0.6rem 0.8rem;
-  text-align: left;
+.callout p {
+  margin: 0.3rem 0 0;
 }
 
-.complexity-table thead th {
-  color: var(--ink-soft);
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: var(--paper);
+.callout--tip {
+  background: var(--teal-dim);
+  border: 1px solid var(--teal);
+  color: #124039;
+}
+
+.callout--warning {
+  background: var(--rust-dim);
+  border: 1px solid var(--rust);
+  color: #631f15;
 }
 
 /* =========================================================
-   Interactive Python Console Component (Sidecar)
+   Interactive Python Console Component (Gentle Companion)
    ========================================================= */
 
 .python-console {
@@ -667,7 +751,7 @@
 
 .python-console__body {
   padding: 0.9rem;
-  min-height: 440px;
+  min-height: 420px;
 }
 
 .code-editor-header {
@@ -733,7 +817,7 @@
 }
 
 .python-terminal {
-  margin-top: 0.75rem;
+  margin-top: 0.7rem;
   background: #0a0d0f;
   border: 1px solid #222b35;
   border-radius: 4px;
@@ -758,36 +842,37 @@
   color: #4ade80;
   white-space: pre-wrap;
   word-break: break-word;
-  max-height: 160px;
+  max-height: 140px;
   overflow-y: auto;
 }
 
-/* Explanation pane */
-.python-console__explanation {
-  color: #cbd5e1;
+.mini-insight {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  background: #131920;
+  border: 1px solid #25313d;
+  border-radius: 3px;
+  padding: 0.5rem 0.65rem;
 }
 
+.mini-insight strong {
+  color: #38bdf8;
+}
+
+/* Concept pane */
 .python-console__explanation h3 {
   color: #f1f5f9;
   font-size: 1.15rem;
   margin-bottom: 0.6rem;
 }
 
-.explanation-text p {
-  font-size: 0.85rem;
+.concept-explanation {
+  font-size: 0.88rem;
   line-height: 1.5;
-  color: #94a3b8;
-  margin-bottom: 0.75rem;
-}
-
-.explanation-text strong {
-  color: #f8fafc;
-}
-
-.explanation-text code {
-  background: #242e39;
-  border-color: #3e4c5e;
-  color: #38bdf8;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
 }
 
 /* Quiz pane */

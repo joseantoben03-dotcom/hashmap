@@ -1,45 +1,45 @@
 export const STEPS = [
   {
     id: 1,
-    title: 'Case Study: The Registry Bottleneck',
-    drawerLabel: 'Problem',
-    concept: 'List O(n) vs Dict O(1)',
-    pythonTopic: 'dict creation & key-value syntax'
+    title: 'The Endless Line',
+    drawerLabel: 'The Crisis',
+    concept: 'Waiting in line vs. Direct tokens',
+    pythonTopic: 'The problem with lists'
   },
   {
     id: 2,
-    title: 'The Hash Dispatcher & Immutability',
-    drawerLabel: 'Hashing',
-    concept: 'Hash function & bucket mapping',
-    pythonTopic: 'hash(), __hash__, & unhashable types'
+    title: 'The Magic Ticket',
+    drawerLabel: 'The Trick',
+    concept: 'Turning a name into a shelf number',
+    pythonTopic: 'hash() & permanent keys'
   },
   {
     id: 3,
-    title: 'Enrolling Courses (Filing Entries)',
-    drawerLabel: 'Enrollment',
-    concept: 'Insertion & in-place updates',
-    pythonTopic: 'dict[key] = val, .update(), "in" keyword'
+    title: 'A Home for Everyone',
+    drawerLabel: 'The Home',
+    concept: 'Filing & instant retrieval',
+    pythonTopic: 'dict[name] = kit'
   },
   {
     id: 4,
-    title: 'Collision Chaos & Resolution',
-    drawerLabel: 'Collisions',
-    concept: 'Collisions & chaining mechanisms',
-    pythonTopic: 'Python open addressing & load factor'
+    title: 'Two People, One Shelf',
+    drawerLabel: 'Roommates',
+    concept: 'When calculations collide',
+    pythonTopic: 'Smart collision handling'
   },
   {
     id: 5,
-    title: 'Querying & Dropping Courses',
-    drawerLabel: 'Lookup & Drop',
-    concept: 'Chain traversal & node deletion',
-    pythonTopic: 'dict.get(), handling KeyError, del & pop()'
+    title: 'Are They on the List?',
+    drawerLabel: 'Inquiry',
+    concept: 'Searching without panic',
+    pythonTopic: 'Polite lookups with .get()'
   },
   {
     id: 6,
-    title: 'Production Scale & Python Superpowers',
-    drawerLabel: 'Superpowers',
-    concept: 'Big-O complexity & memory tradeoffs',
-    pythonTopic: 'defaultdict, Counter, dict comprehensions'
+    title: 'The Invisible City',
+    drawerLabel: 'Big Picture',
+    concept: 'How modern society runs on this',
+    pythonTopic: 'defaultdict & Counter'
   }
 ];
 

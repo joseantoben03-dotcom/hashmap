@@ -1,103 +1,113 @@
 import { useState } from 'react';
 import { BUCKET_COUNT, computeHash, totalEntries } from '../../lib/hashmap';
-import { COURSE_PRESETS } from '../../data/caseStudy';
+import { CITIZEN_PRESETS, STORY_STEPS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import HashWorking from '../HashWorking';
 import StepFooter from '../StepFooter';
 
 export default function Step3Insertion({ buckets, onInsert, onBack, onContinue }) {
-  const [key, setKey] = useState('');
-  const [value, setValue] = useState('');
+  const story = STORY_STEPS[3];
+  const [name, setName] = useState('');
+  const [kit, setKit] = useState('');
   const [lastIndex, setLastIndex] = useState(null);
 
   const filed = totalEntries(buckets);
-  const preview = key.trim() ? computeHash(key.trim(), BUCKET_COUNT) : null;
+  const preview = name.trim() ? computeHash(name.trim(), BUCKET_COUNT) : null;
 
-  function file(k, v) {
-    if (!k.trim() || !v.trim()) return;
-    const index = onInsert(k.trim(), v.trim());
+  function fileKit(n, k) {
+    if (!n.trim() || !k.trim()) return;
+    const index = onInsert(n.trim(), k.trim());
     setLastIndex(index);
-    setKey('');
-    setValue('');
+    setName('');
+    setKit('');
   }
 
   return (
     <section className="step">
-      <div className="step-badge">Operation 1 • Insertion & Updates</div>
-      <h2>Enrolling Courses (Filing Entries)</h2>
+      <div className="story-badge">{story.badge}</div>
+      <h2 className="story-headline">{story.headline}</h2>
 
-      <p>
-        Now let's populate the IIT Ropar course registry. When you register a course in Python via{' '}
-        <code>registry["CS101"] = "Intro to AI"</code>, Python hashes the key, routes it directly to its
-        assigned slot, and stores the record in <strong>O(1) time</strong>.
-      </p>
+      <div className="story-vignette">
+        {story.story.map((paragraph, idx) => (
+          <p key={idx} className="story-text">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      <div className="story-quote">
+        <span className="story-quote__mark">“</span>
+        <div className="story-quote__content">
+          <p className="story-quote__text">{story.quote.text}</p>
+          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+        </div>
+      </div>
 
       <div className="field-row">
-        <label htmlFor="insert-key">Course Code</label>
+        <label htmlFor="citizen-input">Citizen Name</label>
         <input
-          id="insert-key"
+          id="citizen-input"
           type="text"
-          value={key}
-          onChange={(event) => setKey(event.target.value)}
-          placeholder="e.g. CS101"
-          maxLength={24}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          placeholder="e.g. Aarav"
+          maxLength={20}
         />
       </div>
       <div className="field-row">
-        <label htmlFor="insert-value">Course Details</label>
+        <label htmlFor="kit-input">Relief Kit / Item</label>
         <input
-          id="insert-value"
+          id="kit-input"
           type="text"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
-          placeholder="e.g. Intro to AI (4 Cr)"
-          maxLength={32}
+          value={kit}
+          onChange={(event) => setKit(event.target.value)}
+          placeholder="e.g. Ration Kit A"
+          maxLength={28}
         />
       </div>
 
-      <HashWorking computation={preview} emptyHint="Enter a course code and title to see its memory slot." />
+      <HashWorking computation={preview} emptyHint="Enter a name and kit to see which shelf it belongs on." />
 
       <div className="button-row">
         <button
           type="button"
           className="button button--primary"
-          onClick={() => file(key, value)}
-          disabled={!key.trim() || !value.trim()}
+          onClick={() => fileKit(name, kit)}
+          disabled={!name.trim() || !kit.trim()}
         >
-          Enroll Course
+          File Kit to Shelf
         </button>
 
-        <span className="preset-label">Quick Enroll:</span>
-        {COURSE_PRESETS.map((course) => (
+        <span className="preset-label">Quick Register:</span>
+        {CITIZEN_PRESETS.slice(0, 4).map((citizen) => (
           <button
-            key={course.key}
+            key={citizen.key}
             type="button"
             className="button button--ghost"
-            onClick={() => file(course.key, course.value)}
+            onClick={() => fileKit(citizen.key, citizen.value)}
           >
-            + {course.key}
+            + {citizen.key} ({citizen.category})
           </button>
         ))}
       </div>
 
       <BucketWall buckets={buckets} highlightIndex={lastIndex} highlightVariant="insert" />
 
-      <div className="callout callout--tip">
-        <strong>💡 Key Uniqueness in Python:</strong> Try enrolling <code>"CS101"</code> again with a new title.
-        Notice that Python updates the existing entry in place instead of creating duplicate keys!
+      <div className="story-insight">
+        <strong>💡 The Social Insight:</strong> {story.insight}
       </div>
 
       <p className="step-note">
         {filed === 0
-          ? 'The registry is currently empty.'
-          : `${filed} course${filed === 1 ? '' : 's'} registered in the active memory table.`}
+          ? 'The shelves are currently empty.'
+          : `${filed} relief kit${filed === 1 ? '' : 's'} assigned to families with zero searching.`}
       </p>
 
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="What Happens When Keys Collide? →"
-        hint={filed < 2 ? 'Enroll at least two courses to see records in memory.' : undefined}
+        continueLabel="What If Two People Get the Same Shelf? →"
+        hint={filed < 2 ? 'Assign at least two relief kits to see how shelves fill in.' : undefined}
       />
     </section>
   );

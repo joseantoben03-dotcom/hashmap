@@ -1,10 +1,10 @@
 import { STEPS } from '../data/steps';
 
 const STATUS_TEXT = {
-  loading: 'Opening case study…',
-  saving: 'Saving progress…',
-  synced: 'Synced with server',
-  offline: 'Saved locally'
+  loading: 'Opening the ledger…',
+  saving: 'Saving your journey…',
+  synced: 'Synced with community hub',
+  offline: 'Saved on your device'
 };
 
 export default function StepSidebar({
@@ -15,11 +15,11 @@ export default function StepSidebar({
   onReset
 }) {
   return (
-    <nav className="sidebar" aria-label="Tutorial steps">
+    <nav className="sidebar" aria-label="Story chapters">
       <div className="sidebar__header">
-        <div className="sidebar__institution-badge">IIT ROPAR • CASE STUDY</div>
-        <h1>Hashmap & Python</h1>
-        <p className="sidebar__subtitle">Engineering an O(1) Campus Registry</p>
+        <div className="sidebar__institution-badge">A SOCIAL JOURNEY</div>
+        <h1>The Endless Line</h1>
+        <p className="sidebar__subtitle">How Hashing & Python Run Modern Society</p>
       </div>
 
       <ol className="drawer-list">
@@ -42,7 +42,7 @@ export default function StepSidebar({
                   {isDone ? '✓' : step.id}
                 </span>
                 <span className="drawer__labels">
-                  <span className="drawer__label">Milestone {step.id} • {step.drawerLabel}</span>
+                  <span className="drawer__label">Scene {step.id} • {step.drawerLabel}</span>
                   <span className="drawer__title">{step.title}</span>
                   <span className="drawer__sublabel">{step.pythonTopic}</span>
                 </span>
@@ -54,13 +54,13 @@ export default function StepSidebar({
 
       <div className="sidebar__footer">
         <div className="sidebar__python-pill">
-          <span>🐍 Python 3.12 Core Concepts</span>
+          <span>🐍 Python Intuitively Introduced</span>
         </div>
         <p className="sync-status" data-status={syncStatus}>
           {STATUS_TEXT[syncStatus] || STATUS_TEXT.offline}
         </p>
         <button type="button" className="link-button" onClick={onReset}>
-          Reset Case Study
+          Restart Story
         </button>
       </div>
     </nav>

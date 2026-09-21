@@ -1,43 +1,37 @@
-# IIT Ropar Case Study: Engineering an O(1) Campus Registry
+# The Endless Line: A Human Story of Hashing & Python
 
-An interactive, dual-workbench educational case study that teaches **how Hash Maps work under the hood** while **indirectly teaching Python programming and internals** (dictionaries, `hash()`, key immutability, collision resolution, safe lookups, and standard library superpowers).
-
----
-
-## The Case Study Scenario
-
-You step into the role of a systems engineer on the **IIT Ropar Academic Portal** team. During course registration week, thousands of concurrent requests freeze the portal because course records are kept in linear lists ($O(n)$ scan). The mission is to re-architect the registry into a constant-time ($O(1)$) system using hash maps and Python dictionaries (`dict`).
+An interactive, story-driven educational experience that explores **how Hash Maps work under the hood** through a real-world social scenario, while **gently introducing Python programming and dictionary internals**.
 
 ---
 
-## 6 Engineering Milestones & Python Curriculum
+## The Story: The Endless Line
 
-| Milestone | Case Study Action | Data Structure Mechanic | Python Internals & Syntax Taught |
-|---|---|---|---|
-| **1. The Bottleneck** | Diagnosis of the slow portal | Array vs. Hash Map direct indexing | Python `list` $O(n)$ scan vs. `dict` $O(1)$ key lookup |
-| **2. The Dispatcher** | Computing course code memory slots | Sum-of-codes modulo table capacity | Built-in `hash()`, why keys MUST be immutable (`tuple` vs `list`), `TypeError: unhashable type` |
-| **3. Enrolling Records** | Enrolling courses (`CS101`, `EE201`, etc.) | Direct memory insertion & key overwriting | `registry[key] = val`, key uniqueness, `.update()`, and `in` operator |
-| **4. Collision Chaos** | Handling slot clashes (`CS101` & `CS011`) | Separate chaining vs open addressing | How CPython handles collisions (perturbation sequence, load factor, table doubling at ~66%) |
-| **5. Query & Drop** | Students querying and dropping electives | Chain traversal, probe counting, node removal | Preventing `KeyError`, safe access with `dict.get()`, `del` vs `dict.pop()` |
-| **6. Production Scale** | System benchmark & advanced patterns | Average $O(1)$ vs worst-case $O(n)$ | `collections.defaultdict`, `collections.Counter`, Dict Comprehensions, insertion ordering |
+Outside a bustling city relief and community distribution center on a 42°C summer afternoon, 10,000 citizens wait in line. Dev, a first-day volunteer coordinator, sits with a 1,000-page paper binder. Searching sequentially from page 1 takes 4 minutes per family ($O(n)$ linear scan), and citizens are fainting in the heat.
+
+Dev realizes human society already invented solutions for this:
+1. **The Coat-Check Token & Postal PIN code**: Turning a name into an exact shelf slot without searching ($O(1)$).
+2. **The Python Dictionary (`dict`)**: Storing records as key-value pairs (`hub["Aarav"] = "Ration Kit A"`).
+3. **The Roommate Rule (Collisions)**: Accommodating multiple people when calculations clash (Amit & Mita).
+4. **Courteous Inquiries**: Avoiding system crashes (`KeyError`) using `.get()`.
+5. **The Invisible Machinery**: How UPI payments (GPay/PhonePe), food delivery (Zomato/Swiggy), Aadhaar, and WhatsApp run on hash maps every second.
 
 ---
 
 ## Features
 
 - **Side-by-Side Workbench**:
-  - **Left Pane**: Case study narrative, interactive inputs, quick course enrollment chips, and visual memory slot drawers (`BucketWall`).
-  - **Right Pane (`PythonConsole`)**:
-    - **Interactive Code**: Live editable Python code snippets with run simulation and output terminal.
-    - **Under the Hood**: In-depth explanations connecting visual actions to CPython runtime mechanics.
-    - **Quick Challenge**: Interactive concept checks with instant feedback.
-- **Offline-First Persistence**: Progress is saved immediately in `localStorage` and synchronized with the Express + MongoDB backend whenever reachable.
+  - **Left Pane (The Social Journey)**: Interactive narrative vignettes, citizen dialogue quotes, sequential search bottleneck simulator, and visual relief shelves (`BucketWall`).
+  - **Right Pane (Gentle Python Companion)**:
+    - **Try in Python**: Bite-sized, editable Python snippets with instant output.
+    - **Why Python Does This**: Everyday parallels explaining data structure decisions.
+    - **Quick Check**: Encouraging concept checks with immediate feedback.
+- **Offline-First Persistence**: Progress is saved immediately in `localStorage` and syncs with the Express + MongoDB backend when available.
 
 ---
 
 ## Running Locally
 
-### 1. Frontend (`python/hashmap`)
+### Frontend (`hashmap`)
 
 ```bash
 cd hashmap
@@ -47,11 +41,10 @@ npm run dev
 
 Open `http://localhost:5173` in your browser.
 
-### 2. Backend (`python/backend`) — Optional
+### Backend (`backend`) — Optional
 
 ```bash
 cd backend
 npm install
-# Configure MONGODB_URI in .env
 npm run dev
 ```

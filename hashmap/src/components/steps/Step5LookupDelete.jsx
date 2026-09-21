@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { computeHash, findEntry } from '../../lib/hashmap';
+import { STORY_STEPS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import StepFooter from '../StepFooter';
 
 export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinue }) {
-  const [query, setQuery] = useState('CS101');
+  const story = STORY_STEPS[5];
+  const [query, setQuery] = useState('Priya');
   const [result, setResult] = useState(null);
 
   function lookup() {
@@ -12,7 +14,7 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
     setResult(findEntry(buckets, query.trim()));
   }
 
-  function remove() {
+  function distribute() {
     if (!query.trim()) return;
     onDelete(query.trim());
     setResult(null);
@@ -26,31 +28,37 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
 
   return (
     <section className="step">
-      <div className="step-badge">Operations 2 & 3 • Lookup & Deletion</div>
-      <h2>Querying & Dropping Courses</h2>
+      <div className="story-badge">{story.badge}</div>
+      <h2 className="story-headline">{story.headline}</h2>
 
-      <p>
-        When an IIT Ropar student queries a course or drops an elective before the registration deadline,
-        how does Python locate or remove the record?
-      </p>
+      <div className="story-vignette">
+        {story.story.map((paragraph, idx) => (
+          <p key={idx} className="story-text">
+            {paragraph}
+          </p>
+        ))}
+      </div>
 
-      <p>
-        Python computes <code>hash(key) % table_size</code> to jump directly to the target slot, then
-        probes that slot until it matches the key or confirms it doesn't exist.
-      </p>
+      <div className="story-quote">
+        <span className="story-quote__mark">“</span>
+        <div className="story-quote__content">
+          <p className="story-quote__text">{story.quote.text}</p>
+          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+        </div>
+      </div>
 
       <div className="field-row">
-        <label htmlFor="lookup-key">Course Code</label>
+        <label htmlFor="lookup-name">Search Name</label>
         <input
-          id="lookup-key"
+          id="lookup-name"
           type="text"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
             setResult(null);
           }}
-          placeholder="e.g. CS101, EE201"
-          maxLength={24}
+          placeholder="e.g. Priya, Kabir, or a stranger"
+          maxLength={20}
         />
       </div>
 
@@ -61,12 +69,12 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
           onClick={lookup}
           disabled={!query.trim()}
         >
-          Query Registry (Lookup)
+          Check Shelf (Instant Inquiry)
         </button>
 
         {result?.entry && (
-          <button type="button" className="button button--danger" onClick={remove}>
-            Drop Course "{result.entry.key}"
+          <button type="button" className="button button--danger" onClick={distribute}>
+            Hand Over Kit & Check Out "{result.entry.key}"
           </button>
         )}
       </div>
@@ -75,13 +83,13 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
         <div className={`callout ${result.entry ? 'callout--tip' : 'callout--warning'}`}>
           {result.entry ? (
             <p>
-              <strong>✓ Found "{result.entry.key}":</strong> {result.entry.value} in Slot [{result.index}]
-              after probing {result.probes} record{result.probes === 1 ? '' : 's'}. Direct constant-time O(1) jump!
+              <strong>✓ Found "{result.entry.key}":</strong> Assigned {result.entry.value} in Shelf #
+              {result.index}. Located instantly in 1 jump checking {result.probes} box{result.probes === 1 ? '' : 'es'}!
             </p>
           ) : (
             <p>
-              <strong>✕ Not Found:</strong> Examined Slot [{result.index}] — course "{query.trim()}" is
-              not registered.
+              <strong>Not Yet Registered:</strong> Checked Shelf #{result.index}. "{query.trim()}" is
+              not on the shelf yet. (Dev calmly directs them to Desk 1 without panicking).
             </p>
           )}
         </div>
@@ -94,19 +102,14 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
         probedKeys={probedKeys}
       />
 
-      <div className="callout callout--note">
-        <strong>⚠️ Avoiding the Infamous KeyError in Python:</strong>
-        <p>
-          In Python, writing <code>registry["UNKNOWN"]</code> crashes your application with a{' '}
-          <code>KeyError</code>! Always use <code>registry.get("UNKNOWN", default_value)</code> for safe
-          access, and <code>registry.pop(key, None)</code> for safe deletions.
-        </p>
+      <div className="story-insight">
+        <strong>💡 The Social Insight:</strong> {story.insight}
       </div>
 
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="Review Complexity & Python Superpowers →"
+        continueLabel="The Big Picture: How Modern Society Runs →"
       />
     </section>
   );

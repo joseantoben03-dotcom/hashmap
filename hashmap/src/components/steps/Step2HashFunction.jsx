@@ -1,65 +1,71 @@
 import { useMemo, useState } from 'react';
 import { BUCKET_COUNT, computeHash, createBuckets } from '../../lib/hashmap';
+import { CITIZEN_PRESETS, STORY_STEPS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import HashWorking from '../HashWorking';
 import StepFooter from '../StepFooter';
 
 const EMPTY_BUCKETS = createBuckets();
-const SAMPLE_CODES = ['CS101', 'EE201', 'ME205', 'MA101', 'HS301'];
 
 export default function Step2HashFunction({ onBack, onContinue }) {
-  const [key, setKey] = useState('CS101');
+  const story = STORY_STEPS[2];
+  const [name, setName] = useState('Priya');
   const [tried, setTried] = useState(true);
 
   const computation = useMemo(
-    () => (key.trim() ? computeHash(key.trim(), BUCKET_COUNT) : null),
-    [key]
+    () => (name.trim() ? computeHash(name.trim(), BUCKET_COUNT) : null),
+    [name]
   );
 
   return (
     <section className="step">
-      <div className="step-badge">Component 1 • The Dispatcher</div>
-      <h2>The Hash Function & Memory Addressing</h2>
+      <div className="story-badge">{story.badge}</div>
+      <h2 className="story-headline">{story.headline}</h2>
 
-      <p>
-        In the IIT Ropar registry, how does Python instantly know which memory drawer holds{' '}
-        <code>"CS101"</code> without searching? It uses a <strong>hash function</strong>.
-      </p>
+      <div className="story-vignette">
+        {story.story.map((paragraph, idx) => (
+          <p key={idx} className="story-text">
+            {paragraph}
+          </p>
+        ))}
+      </div>
 
-      <p>
-        A hash function converts arbitrary data into a deterministic integer. In our simulation, it sums the
-        ASCII character values of the course code and computes the modulo over the table size (
-        <code>sum % {BUCKET_COUNT}</code>) to find the exact memory slot:
-      </p>
+      <div className="story-quote">
+        <span className="story-quote__mark">“</span>
+        <div className="story-quote__content">
+          <p className="story-quote__text">{story.quote.text}</p>
+          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+        </div>
+      </div>
 
       <div className="field-row">
-        <label htmlFor="hash-key">Course Code</label>
+        <label htmlFor="citizen-name">Citizen Name</label>
         <input
-          id="hash-key"
+          id="citizen-name"
           type="text"
-          value={key}
+          value={name}
           onChange={(event) => {
-            setKey(event.target.value);
+            setName(event.target.value);
             if (event.target.value.trim()) setTried(true);
           }}
-          placeholder="e.g. CS101, EE201"
-          maxLength={24}
+          placeholder="e.g. Priya, Aarav"
+          maxLength={20}
         />
       </div>
 
       <div className="button-row button-row--presets">
-        <span className="preset-label">Sample Courses:</span>
-        {SAMPLE_CODES.map((code) => (
+        <span className="preset-label">Try arriving citizens:</span>
+        {CITIZEN_PRESETS.slice(0, 5).map((citizen) => (
           <button
-            key={code}
+            key={citizen.key}
             type="button"
             className="button button--chip"
             onClick={() => {
-              setKey(code);
+              setName(citizen.key);
               setTried(true);
             }}
           >
-            {code}
+            {citizen.key}
           </button>
         ))}
       </div>
@@ -72,20 +78,15 @@ export default function Step2HashFunction({ onBack, onContinue }) {
         highlightVariant="compute"
       />
 
-      <div className="callout callout--note">
-        <strong>⚠️ Crucial Python Rule: Immutability</strong>
-        <p>
-          In Python, dictionary keys <em>must</em> be hashable, which requires them to be{' '}
-          <strong>immutable</strong> (like strings, numbers, and tuples). If keys could be modified,
-          their hash would change, leaving them lost in the wrong memory slot forever!
-        </p>
+      <div className="story-insight">
+        <strong>💡 The Social Insight:</strong> {story.insight}
       </div>
 
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="Enroll Courses Into Memory →"
-        hint={tried ? undefined : 'Test at least one course code to see the slot calculation.'}
+        continueLabel="Start Handing Out Relief Kits →"
+        hint={tried ? undefined : 'Type a name or pick one above to see their shelf.'}
       />
     </section>
   );

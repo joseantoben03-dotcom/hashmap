@@ -1,260 +1,297 @@
-// Case Study Data & Python Learning Modules
-// Scenario: IIT Ropar High-Speed Campus Directory & Course Registry
+// Case Study & Social Story Data: The Community Hub & The Magic of Hashing
 
-export const CASE_STUDY_METADATA = {
-  institution: 'IIT Ropar',
-  systemName: 'Campus Course & Student Registry',
-  scenarioTitle: 'Case Study: Engineering an O(1) Campus Registry',
-  subtitle: 'Mastering Python Dictionaries under the hood through real-world system design'
+export const STORY_METADATA = {
+  title: 'The Endless Line',
+  subtitle: 'A human story of chaos, clever social inventions, and the Python dictionary',
+  location: 'City Community Relief & Distribution Center',
+  protagonist: 'Dev, a first-day volunteer coordinator'
 };
 
-export const COURSE_PRESETS = [
-  { key: 'CS101', value: 'Intro to AI (4 Cr)', dept: 'CSE' },
-  { key: 'EE201', value: 'Signals & Systems (3 Cr)', dept: 'EE' },
-  { key: 'ME205', value: 'Fluid Mechanics (4 Cr)', dept: 'ME' },
-  { key: 'MA101', value: 'Linear Algebra (4 Cr)', dept: 'MATH' },
-  { key: 'HS301', value: 'Tech Ethics (2 Cr)', dept: 'HSS' },
-  { key: 'PH102', value: 'Modern Physics (3 Cr)', dept: 'PHYS' }
+export const CITIZEN_PRESETS = [
+  { key: 'Aarav', value: 'Ration Kit A', category: 'Family Ration' },
+  { key: 'Priya', value: 'First Aid Pack', category: 'Medical' },
+  { key: 'Kabir', value: 'Baby Care Kit', category: 'Infant' },
+  { key: 'Fatima', value: 'Blanket & Warm Clothes', category: 'Shelter' },
+  { key: 'Ananya', value: 'Clean Water Voucher', category: 'Essentials' },
+  { key: 'Rohan', value: 'Emergency Radio', category: 'Communication' }
 ];
 
-export const COLLISION_COURSES = [
-  { key: 'CS101', value: 'Intro to AI (4 Cr)', note: 'Sum: 296, Bucket: 2' },
-  { key: 'CS011', value: 'Comp Architecture (3 Cr)', note: 'Sum: 296, Bucket: 2 (Anagram code collision)' }
+export const COLLISION_CITIZENS = [
+  { key: 'Amit', value: 'Emergency Kit A', note: 'Char sum: 407 → Shelf 1' },
+  { key: 'Mita', value: 'Medical Kit B', note: 'Char sum: 407 → Shelf 1 (Same letters, same shelf!)' }
 ];
 
-export const PYTHON_STEP_CONTENT = {
+export const STORY_STEPS = {
   1: {
-    tag: 'Python Syntax: Dictionaries vs Lists',
-    title: 'Why Python Dictionaries Exist',
-    explanation: `In Python, storing data in a list requires sequential scanning (O(n) time). With 5,000 courses, searching for a course means iterating through every single element.
+    badge: 'Scene 1 • The Human Dilemma',
+    headline: 'The Endless Line in the Summer Sun',
+    story: [
+      'It is 11 AM outside the city relief center. The temperature has crossed 42°C.',
+      'A line of 10,000 citizens stretches down three city blocks. Dev, a nervous new volunteer, is sitting behind a table with a giant 1,000-page paper binder.',
+      'When Mrs. Verma reaches the front and gives her name, Dev has to flip page by page, scanning thousands of handwritten names from the top. Every single lookup takes 4 whole minutes. People are fainting in the heat.'
+    ],
+    quote: {
+      speaker: 'Elderly Citizen in Line',
+      text: 'Beta, there has to be a smarter way. Why must you read every stranger’s name just to find mine?'
+    },
+    insight: 'In human society, searching sequentially from the beginning (Linear Scan, O(n)) is disastrous when crowds grow. We desperately need a direct shortcut.'
+  },
 
-A Python **dict** solves this using key-value pairs with instant O(1) lookup.`,
-    pythonCode: `# 1. The Slow List Approach (O(n) search)
-courses_list = [
-    ("CS101", "Intro to AI"),
-    ("EE201", "Signals & Systems"),
-    ("ME205", "Fluid Mechanics")
-]
-# To find CS101, Python checks index 0, then index 1...
+  2: {
+    badge: 'Scene 2 • The Clever Trick',
+    headline: 'The Secret of the Coat Check & Postal PINs',
+    story: [
+      'Dev remembers how a theater coat-check works: when 5,000 people hand over their jackets, the attendant never searches through 5,000 hangers.',
+      'Instead, they give you a token number. That number directly tells them which shelf and rack to open instantly.',
+      'Even better: Postal PIN codes! A postal clerk doesn’t read 1.4 billion addresses. The PIN code instantly routes the letter to one specific delivery box.'
+    ],
+    quote: {
+      speaker: 'Dev, the Volunteer',
+      text: 'What if we turn each person’s name into a shelf number using a simple rule? No searching. Just jump straight to the shelf!'
+    },
+    insight: 'A hash function is simply a deterministic calculation: it turns a human name into an exact shelf slot.'
+  },
 
-# 2. The Fast Dictionary Approach (O(1) lookup)
-courses_dict = {
-    "CS101": "Intro to AI",
-    "EE201": "Signals & Systems",
-    "ME205": "Fluid Mechanics"
-}
-print(courses_dict["CS101"])  # Instant direct lookup!`,
-    sampleOutput: `Intro to AI
-[O(1) lookup completed in ~0.00002s vs O(n) list scan]`,
+  3: {
+    badge: 'Scene 3 • Meeting Python',
+    headline: 'Enter the Python Dictionary: The Instant Helper',
+    story: [
+      'Dev pulls out a laptop and opens Python. In Python, there is a built-in superhero designed specifically for this human need: the Dictionary (`dict`).',
+      'Instead of a list of names that requires scanning, a Python dictionary lets Dev pair each citizen’s name (the Key) directly with their relief kit (the Value).',
+      'With just one line, `hub["Aarav"] = "Ration Kit"`, Python computes the slot and files it instantly.'
+    ],
+    quote: {
+      speaker: 'Dev',
+      text: 'Watch this: whether we have 7 families or 7 million families, finding a kit takes the exact same split-second!'
+    },
+    insight: 'Keys are like unique name tags; values are the packages. Python guarantees instant filing without searching.'
+  },
+
+  4: {
+    badge: 'Scene 4 • The Social Clash',
+    headline: 'Two People, One Shelf: The Polite Roommate Rule',
+    story: [
+      'Suddenly, Amit arrives, followed immediately by Mita. Both their names are made of the exact same letters (A-M-I-T), so the math puts them on the exact same shelf!',
+      'Does Dev throw away Amit’s kit? Of course not! That would be a social disaster.',
+      'Instead, the shelf simply makes room for both. In computer science, this is called a collision, and keeping both is called chaining.'
+    ],
+    quote: {
+      speaker: 'Amit & Mita',
+      text: 'Our names have the same letters, but we are completely different people!'
+    },
+    insight: 'Collisions in real life and computers are natural. A well-designed system politely accommodates roommates without losing anything.'
+  },
+
+  5: {
+    badge: 'Scene 5 • Preventing Panic',
+    headline: '“Has My Sister Checked In?”',
+    story: [
+      'A worried boy runs up to the desk: “Has Priya registered yet? I lost her in the crowd!”',
+      'In basic Python code, asking for someone who is not yet in the dictionary (`hub["Priya"]`) can trigger a dreaded `KeyError`—the digital equivalent of a volunteer screaming in panic and dropping the ledger.',
+      'Dev uses the polite Python method instead: `hub.get("Priya", "Not yet checked in")`. Calm, safe, and reassuring.'
+    ],
+    quote: {
+      speaker: 'Dev to the Boy',
+      text: 'She hasn’t checked in yet, beta. But don’t worry, we won’t panic or crash. We’ll watch out for her.'
+    },
+    insight: 'Never crash when data is missing. Python’s `.get()` provides a gentle, graceful fallback.'
+  },
+
+  6: {
+    badge: 'Scene 6 • The Invisible Society',
+    headline: 'The Invisible Machinery of the Modern World',
+    story: [
+      'By the end of the day, 10,000 citizens received their kits with zero waiting in line. The sun sets over a calm, happy center.',
+      'Look around your daily life: when you make a UPI payment with Google Pay, book a cab on Uber, verify your Aadhaar, or search a friend on Instagram, you are using this exact social magic.',
+      'Python makes running society effortless with tools like `defaultdict` (grouping families by neighborhood) and `Counter` (tracking supplies).'
+    ],
+    quote: {
+      speaker: 'Center Director',
+      text: 'You didn’t just write code, Dev. You respected people’s time and dignity.'
+    },
+    insight: 'Hash maps are not just an academic algorithm; they are the invisible architecture that keeps modern human society moving.'
+  }
+};
+
+export const PYTHON_GENTLE_LESSONS = {
+  1: {
+    title: 'The Real World vs. The Slow List',
+    concept: 'Why lists make people wait',
+    explanation: 'Imagine keeping names in a simple Python list. To find if someone is there, Python has to look at item 0, then item 1, all the way to 10,000.',
+    snippet: `# The Slow Way: A list of people in line
+waiting_line = ["Rohan", "Fatima", "Kabir", "Priya"]
+
+# Finding "Priya" means checking Rohan, then Fatima, then Kabir...
+# In a list of 10,000 people, this takes 10,000 checks!
+print("Is Priya in line?", "Priya" in waiting_line)`,
+    output: `Is Priya in line? True\n(Checked sequentially from start to end)`,
+    oneLinerTitle: 'The Human Revelation:',
+    oneLinerNote: 'Lists are great for ordered lines, but terrible for instant lookups.',
     challenge: {
-      question: 'Which of the following creates a valid empty dictionary in Python?',
-      options: [
-        'd = {} or d = dict()',
-        'd = [] or d = list()',
-        'd = () or d = tuple()',
-        'd = set()'
-      ],
+      question: 'If a line has 10,000 people, how many people do you have to check in the worst case to find someone in a standard list?',
+      options: ['10,000 people (every single one)', 'Only 1 person', '7 people', 'Zero'],
       correctIndex: 0,
-      feedback: 'Correct! Both {} and dict() initialize an empty dictionary in Python.'
+      feedback: 'Exactly! If the person is at the very end (or not there at all), you have to examine all 10,000.'
     }
   },
 
   2: {
-    tag: 'Python Internals: hash() & Immutability',
-    title: 'The hash() Function & The Immutability Rule',
-    explanation: `Python uses its built-in \`hash()\` function to map keys into integer hashes.
+    title: 'Turning a Name into a Shelf Number',
+    concept: 'The hash() function & Immutability',
+    explanation: 'Python has a built-in `hash()` function. It takes any permanent identity (a string, a number, a tuple) and gives back an integer finger-print.',
+    snippet: `# Python turns a name into a giant unique number
+name = "Priya"
+fingerprint = hash(name)
+print(f"Fingerprint of {name}: {fingerprint}")
 
-CRITICAL RULE: In Python, **only immutable objects can be dictionary keys!**
-- Strings, integers, floats, and tuples are immutable (hashable).
-- Lists and dictionaries are mutable, so they CANNOT be keys.`,
-    pythonCode: `# Python's built-in hash() function
-print(f"hash('CS101') = {hash('CS101')}")
-
-# Valid key: Tuple (immutable)
-course_coord = ("Lecture Hall 1", 9)
-schedule = {course_coord: "CS101"}
-print("Tuple key works:", schedule[course_coord])
-
-# INVALID: Using a list as a key throws TypeError!
-try:
-    bad_dict = {["CS", 101]: "Intro to AI"}
-except TypeError as err:
-    print(f"Error caught: {err}")`,
-    sampleOutput: `hash('CS101') = 7482910485918239012
-Tuple key works: CS101
-Error caught: unhashable type: 'list'`,
+# Map it to our 7 shelves with modulo (% 7)
+shelf_number = abs(fingerprint) % 7
+print(f"Assign {name} to Shelf #{shelf_number}")`,
+    output: `Fingerprint of Priya: 58291049281920192
+Assign Priya to Shelf #3\n(Direct calculation: no searching required!)`,
+    oneLinerTitle: 'The Immutability Rule:',
+    oneLinerNote: 'A person’s name or token cannot change mid-flight. That is why Python requires dictionary keys to be immutable (strings, numbers, tuples).',
     challenge: {
-      question: 'Which of the following can be used as a key in a Python dictionary?',
+      question: 'Why can a string like "Aarav" be a dictionary key, but a mutable list like ["Aarav"] cannot?',
       options: [
-        '("CS", 101) — a tuple of immutable items',
-        '["CS", 101] — a list',
-        '{"code": "CS101"} — another dictionary',
-        '{"CS101"} — a set'
+        'Because strings cannot be accidentally altered, keeping their shelf address permanent.',
+        'Because Python dislikes square brackets.',
+        'Because strings take up less memory than lists.',
+        'Because lists are only for numbers.'
       ],
       correctIndex: 0,
-      feedback: 'Spot on! Tuples containing immutable elements are hashable, whereas lists, dicts, and sets are mutable and unhashable.'
+      feedback: 'Spot on! If you could change a key while it was on a shelf, you would never be able to find it again!'
     }
   },
 
   3: {
-    tag: 'Python Operations: Insertion & Updates',
-    title: 'Inserting & Updating Records in Python',
-    explanation: `When you assign \`dict[key] = value\`:
-1. If the key is new, Python computes its hash and allocates a slot.
-2. If the key already exists, Python **overwrites** the existing value in-place without duplicating the key.
-3. You can check existence in O(1) time using the \`in\` operator.`,
-    pythonCode: `registry = {}
+    title: 'Meeting the Python Dictionary (dict)',
+    concept: 'Key-Value Pairing & Instant Assignment',
+    explanation: 'A dictionary connects a Name (the Key) directly to an Item (the Value) using curly braces `{}` or assignment.',
+    snippet: `# Dev creates the community hub ledger
+relief_hub = {}
 
-# Enrolling courses (Insertion)
-registry["CS101"] = "Intro to AI (4 Cr)"
-registry["EE201"] = "Signals & Systems (3 Cr)"
+# Arriving citizens get their kits stored instantly
+relief_hub["Aarav"] = "Ration Kit A"
+relief_hub["Priya"] = "First Aid Pack"
+relief_hub["Kabir"] = "Baby Care Kit"
 
-# Checking membership in O(1) time
-print("Is CS101 offered?", "CS101" in registry)
-
-# Updating an existing course (replaces value)
-registry["CS101"] = "Intro to AI & ML (4 Cr)"
-print("Updated CS101:", registry["CS101"])
-
-# Bulk insert/update with .update()
-registry.update({"ME205": "Fluid Mech", "MA101": "Calculus"})
-print(f"Total courses enrolled: {len(registry)}")`,
-    sampleOutput: `Is CS101 offered? True
-Updated CS101: Intro to AI & ML (4 Cr)
-Total courses enrolled: 4`,
+print("Who is registered?", list(relief_hub.keys()))
+print("Priya's kit:", relief_hub["Priya"])`,
+    output: `Who is registered? ['Aarav', 'Priya', 'Kabir']
+Priya's kit: First Aid Pack\n(Looked up in 0.00001 seconds!)`,
+    oneLinerTitle: 'Updating in Place:',
+    oneLinerNote: 'If Aarav upgrades to "Ration Kit B", `relief_hub["Aarav"] = "Ration Kit B"` updates his existing box without creating a messy duplicate.',
     challenge: {
-      question: 'What happens if you run `registry["CS101"] = "New Title"` when "CS101" is already in `registry`?',
+      question: 'What is the syntax to create a dictionary connecting citizen "Dev" with "Volunteer"?',
       options: [
-        'It updates the value for "CS101" without adding a duplicate key.',
-        'It raises a KeyAlreadyExistsError.',
-        'It appends a duplicate "CS101" entry.',
-        'It deletes the previous key entirely.'
+        'staff = {"Dev": "Volunteer"}',
+        'staff = ["Dev", "Volunteer"]',
+        'staff = ("Dev" -> "Volunteer")',
+        'staff = <Dev = Volunteer>'
       ],
       correctIndex: 0,
-      feedback: 'Exactly! Dictionary keys are unique. Re-assigning to an existing key overwrites its associated value.'
+      feedback: 'Correct! Curly braces with key: value (`{"Dev": "Volunteer"}`) is Python’s iconic dictionary syntax.'
     }
   },
 
   4: {
-    tag: 'Python Architecture: How Python Handles Collisions',
-    title: 'Collisions: Separate Chaining vs Python Open Addressing',
-    explanation: `When two keys produce the same bucket index (like "CS101" and "CS011"), a collision occurs.
+    title: 'When Shelves Collide',
+    concept: 'How Python handles multiple people in one spot',
+    explanation: 'When two different names land on the same shelf, real Python uses a smart internal sequence (Open Addressing) to find the nearest open pocket in memory.',
+    snippet: `# In Python, you never have to worry about collisions manually!
+relief_hub = {}
 
-- In our visual model, we use **Separate Chaining** (linked cards in each drawer).
-- In real Python (CPython), Python uses **Open Addressing with Perturbation**:
-  All entries live in a contiguous array. When a collision occurs, Python calculates a pseudo-random probe sequence to find the next open slot.
-- Python maintains a **Load Factor** (entries / capacity). When the table is ~66% full, Python automatically doubles the table size to prevent collisions from slowing down lookups.`,
-    pythonCode: `# Simulating collision behavior in Python
-# Even when two strings have the same modulo index,
-# Python's dict resolves it seamlessly:
+# Amit and Mita produce the same hash bucket in our 7-shelf wall
+relief_hub["Amit"] = "Emergency Kit"
+relief_hub["Mita"] = "Medical Kit"
 
-portal = {}
-portal["CS101"] = "Artificial Intelligence"
-portal["CS011"] = "Computer Architecture"
-
-# Both keys remain completely distinct and accessible in O(1)
-print("CS101:", portal["CS101"])
-print("CS011:", portal["CS011"])
-print("Stored keys:", list(portal.keys()))`,
-    sampleOutput: `CS101: Artificial Intelligence
-CS011: Computer Architecture
-Stored keys: ['CS101', 'CS011']
-[CPython resolved slot clash internally via probe sequence]`,
+# Python gracefully stores both without missing a beat
+print("Amit gets:", relief_hub["Amit"])
+print("Mita gets:", relief_hub["Mita"])
+print("Total families safely helped:", len(relief_hub))`,
+    output: `Amit gets: Emergency Kit
+Mita gets: Medical Kit
+Total families safely helped: 2\n(Zero loss. Both families are safe.)`,
+    oneLinerTitle: 'Behind the Scenes:',
+    oneLinerNote: 'Python automatically expands its memory table whenever it gets 2/3 full, ensuring shelves never get overcrowded.',
     challenge: {
-      question: 'Why does Python resize its dictionary table when it is approximately 2/3 full?',
+      question: 'What happens in Python when two different keys calculate to the same slot?',
       options: [
-        'To keep the load factor low and guarantee average O(1) lookup times.',
-        'Because Python lists run out of memory at 66%.',
-        'To re-sort keys in alphabetical order.',
-        'Because Python only supports up to 64 items per dictionary.'
+        'Python resolves the collision automatically; both keys and values are preserved safely.',
+        'The second key overwrites and erases the first key.',
+        'Python crashes with a CollisionError.',
+        'The computer deletes the entire dictionary.'
       ],
       correctIndex: 0,
-      feedback: 'Correct! Keeping the load factor below ~66% ensures collisions stay rare, maintaining blazing fast O(1) operations.'
+      feedback: 'Exactly! Python’s internal collision resolver ensures every unique key is kept safely and separately.'
     }
   },
 
   5: {
-    tag: 'Python Best Practices: Safe Lookups & Deletion',
-    title: 'Avoiding KeyError: get(), del, & pop()',
-    explanation: `Accessing a missing key with bracket notation \`dict[key]\` throws a **KeyError**, crashing your script!
+    title: 'The Courteous Lookup: Using .get()',
+    concept: 'Preventing KeyError crashes',
+    explanation: 'If a citizen has not arrived yet, asking `hub["Stranger"]` throws an ugly `KeyError`. Using `.get()` responds politely and keeps the center running smoothly.',
+    snippet: `relief_hub = {"Aarav": "Ration Kit A", "Priya": "First Aid"}
 
-Python gives you safe, idiomatic alternatives:
-- \`dict.get(key, default)\`: Returns the default fallback value if key is not found.
-- \`del dict[key]\`: Deletes the key (raises KeyError if missing).
-- \`dict.pop(key, default)\`: Safely removes the key and returns its value.`,
-    pythonCode: `registry = {"CS101": "Intro to AI", "EE201": "Signals"}
+# The risky way: crashes if the name isn't there!
+# print(relief_hub["UnknownPerson"]) # -> Crashes with KeyError!
 
-# 1. Dangerous Lookup (causes crash if missing)
-try:
-    print(registry["CS999"])
-except KeyError as e:
-    print(f"KeyError caught: {e} does not exist!")
+# The courteous Python way: .get(key, friendly_fallback)
+inquiry = relief_hub.get("Rohan", "Not registered yet — please register at Desk 1")
+print("Rohan inquiry status:", inquiry)
 
-# 2. Pythonic Safe Lookup with .get()
-result = registry.get("CS999", "Course not found in IIT Ropar catalog")
-print("Safe get result:", result)
-
-# 3. Safe Deletion with .pop()
-dropped = registry.pop("EE201", None)
-print(f"Dropped course: {dropped}")
-print("Remaining courses:", registry)`,
-    sampleOutput: `KeyError caught: 'CS999' does not exist!
-Safe get result: Course not found in IIT Ropar catalog
-Dropped course: Signals
-Remaining courses: {'CS101': 'Intro to AI'}`,
+found = relief_hub.get("Priya", "Not found")
+print("Priya inquiry status:", found)`,
+    output: `Rohan inquiry status: Not registered yet — please register at Desk 1
+Priya inquiry status: First Aid\n(Safe and polite. Zero crashes.)`,
+    oneLinerTitle: 'Pro-Tip:',
+    oneLinerNote: 'Always use `.get()` whenever user input might search for something that isn’t guaranteed to exist.',
     challenge: {
-      question: 'What is returned by `courses.get("BIO101", "Not Offered")` if "BIO101" is NOT in `courses`?',
+      question: 'What does `relief_hub.get("Sunil", "Pending")` return if "Sunil" has not yet registered?',
       options: [
-        '"Not Offered"',
-        'Raises a KeyError exception',
+        '"Pending"',
+        'It crashes with a KeyError',
         'None',
         'False'
       ],
       correctIndex: 0,
-      feedback: 'Correct! .get() returns the fallback default value ("Not Offered") instead of raising a KeyError.'
+      feedback: 'Correct! Instead of blowing up, .get() peacefully returns your custom fallback message ("Pending").'
     }
   },
 
   6: {
-    tag: 'Advanced Python: Superpowers & Big-O',
-    title: 'Production Superpowers: defaultdict, Counter & Comprehensions',
-    explanation: `Python provides specialized dictionary subclasses in the standard library \`collections\` module that elevate your code:
+    title: 'The Superpowers Running Our World',
+    concept: 'defaultdict & Counter for Social Good',
+    explanation: 'Python’s standard library gives you superpowers: `defaultdict` automatically groups people into neighborhoods, and `Counter` counts supplies instantly.',
+    snippet: `from collections import defaultdict, Counter
 
-- **defaultdict**: Never worry about initializing nested lists or counters.
-- **Counter**: Instant frequency counting.
-- **Dict Comprehensions**: Elegant, readable transformations.`,
-    pythonCode: `from collections import defaultdict, Counter
+# 1. Group families by Neighborhood automatically
+shelters = defaultdict(list)
+shelters["Ward 4"].append("Aarav's Family")
+shelters["Ward 4"].append("Fatima's Family")
+shelters["Ward 9"].append("Kabir's Family")
 
-# 1. Grouping enrollments with defaultdict
-departments = defaultdict(list)
-enrollments = [("CSE", "CS101"), ("CSE", "CS201"), ("EE", "EE201")]
+print("Ward 4 families:", shelters["Ward 4"])
 
-for dept, code in enrollments:
-    departments[dept].append(code)  # No need to check if key exists!
-
-print("Departments:", dict(departments))
-
-# 2. Counting department course loads with Counter
-dept_counts = Counter(["CSE", "CSE", "EE", "ME", "CSE"])
-print("Most popular department:", dept_counts.most_common(1))
-
-# 3. Dict Comprehension: Uppercasing course codes
-codes = ["cs101", "ee201", "me205"]
-upper_map = {c.upper(): f"Course {c.upper()}" for c in codes}
-print("Comprehension result:", upper_map)`,
-    sampleOutput: `Departments: {'CSE': ['CS101', 'CS201'], 'EE': ['EE201']}
-Most popular department: [('CSE', 3)]
-Comprehension result: {'CS101': 'Course CS101', 'EE201': 'Course EE201', 'ME205': 'Course ME205'}`,
+# 2. Count required relief kits in 1 line
+requests = ["Ration Kit", "Medical", "Ration Kit", "Blanket", "Ration Kit"]
+inventory = Counter(requests)
+print("Top needed item:", inventory.most_common(1))`,
+    output: `Ward 4 families: ["Aarav's Family", "Fatima's Family"]
+Top needed item: [('Ration Kit', 3)]\n(Instant social logistics for thousands of people)`,
+    oneLinerTitle: 'The Big Picture:',
+    oneLinerNote: 'From emergency relief to global networks, hash maps turn impossible human scale into simple, kind, instant connections.',
     challenge: {
-      question: 'What is the primary benefit of collections.defaultdict over a standard dict?',
+      question: 'Why is `collections.defaultdict(list)` so beloved by Python developers?',
       options: [
-        'It automatically provides a default value for nonexistent keys when accessed, eliminating manual existence checks.',
-        'It makes lookups O(0.5) instead of O(1).',
-        'It allows mutable objects to be used as keys.',
-        'It automatically saves records to a SQLite database.'
+        'It automatically creates a fresh list when a new key is accessed, so you never have to check `if key not in dict`.',
+        'It runs on blockchain.',
+        'It makes code look like JavaScript.',
+        'It deletes keys that are not used.'
       ],
       correctIndex: 0,
-      feedback: 'Spot on! defaultdict provides a callable factory (like list, int, or set) that initializes missing keys automatically.'
+      feedback: 'Spot on! No more tedious checking if a key exists before appending. It is pure Python elegance.'
     }
   }
 };
