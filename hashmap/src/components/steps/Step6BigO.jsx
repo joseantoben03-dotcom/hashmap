@@ -3,10 +3,10 @@ import { STORY_STEPS } from '../../data/caseStudy';
 import StepFooter from '../StepFooter';
 
 const SOCIAL_EXAMPLES = [
-  { service: 'UPI Payments (GPay/PhonePe)', whatItDoes: 'Finds bank account from phone # in 0.001s', speed: 'O(1) Instant' },
-  { service: 'Food Delivery (Swiggy/Zomato)', whatItDoes: 'Tracks 1,000,000 live orders by order ID', speed: 'O(1) Instant' },
-  { service: 'Aadhaar / National ID', whatItDoes: 'Verifies citizen token without duplicate scans', speed: 'O(1) Instant' },
-  { service: 'Instagram / WhatsApp', whatItDoes: 'Checks if username is free & opens chat', speed: 'O(1) Instant' }
+  { service: 'UPI Payments (GPay/PhonePe)', desc: 'Mobile # -> Bank account (0.001s)' },
+  { service: 'Food Delivery (Swiggy/Zomato)', desc: 'Order ID -> Live tracker' },
+  { service: 'Aadhaar ID System', desc: 'Citizen Token -> Voter registry' },
+  { service: 'Instagram & WhatsApp', desc: 'Username -> Chat history' }
 ];
 
 export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
@@ -15,16 +15,10 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
   return (
     <section className="step">
-      <div className="story-header">
+      <div className="story-card-minimal">
         <span className="story-badge">{story.badge}</span>
         <h2 className="story-headline">{story.headline}</h2>
-      </div>
-
-      <div className="story-card">
-        <p className="story-micro">{story.microStory}</p>
-        <div className="story-quote-inline">
-          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
-        </div>
+        <p className="story-micro">{story.storyLine}</p>
       </div>
 
       <div className="interactive-demo-box">
@@ -32,8 +26,7 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
           {SOCIAL_EXAMPLES.map((item) => (
             <div key={item.service} className="social-card">
               <span className="social-card__name">{item.service}</span>
-              <span className="social-card__desc">{item.whatItDoes}</span>
-              <span className="social-card__badge">{item.speed}</span>
+              <span className="social-card__desc">{item.desc}</span>
             </div>
           ))}
         </div>
@@ -41,8 +34,8 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
       <p className="step-note">
         {filed === 0
-          ? 'You experienced how hashing and Python dictionaries run modern society.'
-          : `Together with Dev, you organized and safeguarded ${filed} relief kit${filed === 1 ? '' : 's'} today.`}
+          ? 'You completed the journey of hashing and Python dictionaries.'
+          : `Together with Dev, you organized ${filed} relief kit${filed === 1 ? '' : 's'} with zero waiting in line.`}
       </p>
 
       <StepFooter

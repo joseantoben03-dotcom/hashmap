@@ -1,12 +1,5 @@
 import { STEPS } from '../data/steps';
 
-const STATUS_TEXT = {
-  loading: 'Opening the ledger…',
-  saving: 'Saving your journey…',
-  synced: 'Synced with community hub',
-  offline: 'Saved on your device'
-};
-
 export default function StepSidebar({
   currentStep,
   completedSteps,
@@ -15,9 +8,9 @@ export default function StepSidebar({
   onReset
 }) {
   return (
-    <nav className="sidebar" aria-label="Story chapters">
+    <nav className="sidebar" aria-label="Story scenes">
       <div className="sidebar__header">
-        <div className="sidebar__institution-badge">A SOCIAL JOURNEY</div>
+        <div className="sidebar__institution-badge">INTERACTIVE STORY</div>
         <h1>The Endless Line</h1>
         <p className="sidebar__subtitle">How Hashing & Python Run Modern Society</p>
       </div>
@@ -42,9 +35,8 @@ export default function StepSidebar({
                   {isDone ? '✓' : step.id}
                 </span>
                 <span className="drawer__labels">
-                  <span className="drawer__label">Scene {step.id} • {step.drawerLabel}</span>
+                  <span className="drawer__label">Scene {step.id}</span>
                   <span className="drawer__title">{step.title}</span>
-                  <span className="drawer__sublabel">{step.pythonTopic}</span>
                 </span>
               </button>
             </li>
@@ -53,11 +45,8 @@ export default function StepSidebar({
       </ol>
 
       <div className="sidebar__footer">
-        <div className="sidebar__python-pill">
-          <span>🐍 Python Intuitively Introduced</span>
-        </div>
-        <p className="sync-status" data-status={syncStatus}>
-          {STATUS_TEXT[syncStatus] || STATUS_TEXT.offline}
+        <p className="sync-status">
+          {syncStatus === 'synced' ? '✓ Progress Saved' : 'Saved on Device'}
         </p>
         <button type="button" className="link-button" onClick={onReset}>
           Restart Story

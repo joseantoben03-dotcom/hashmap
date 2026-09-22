@@ -9,16 +9,16 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
   const [query, setQuery] = useState('Priya');
   const [result, setResult] = useState(null);
 
-  function lookup() {
-    if (!query.trim()) return;
-    setResult(findEntry(buckets, query.trim()));
+  function lookupName(q) {
+    if (!q.trim()) return;
+    setQuery(q);
+    setResult(findEntry(buckets, q.trim()));
   }
 
   function distribute() {
     if (!query.trim()) return;
     onDelete(query.trim());
     setResult(null);
-    setQuery('');
   }
 
   const bucketForQuery = query.trim() ? computeHash(query.trim()).index : null;
@@ -28,47 +28,31 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
 
   return (
     <section className="step">
-      <div className="story-header">
+      <div className="story-card-minimal">
         <span className="story-badge">{story.badge}</span>
         <h2 className="story-headline">{story.headline}</h2>
-      </div>
-
-      <div className="story-card">
-        <p className="story-micro">{story.story || story.microStory}</p>
-        <div className="story-quote-inline">
-          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
-        </div>
+        <p className="story-micro">{story.storyLine}</p>
       </div>
 
       <div className="interactive-demo-box">
-        <div className="field-row">
-          <label htmlFor="lookup-name">Check Citizen</label>
-          <input
-            id="lookup-name"
-            type="text"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setResult(null);
-            }}
-            placeholder="e.g. Priya or Rohan"
-            maxLength={20}
-          />
-        </div>
-
         <div className="button-row">
           <button
             type="button"
-            className="button button--primary"
-            onClick={lookup}
-            disabled={!query.trim()}
+            className="button button--ghost"
+            onClick={() => lookupName('Priya')}
           >
-            ▶ Instant Inquiry (`.get()`)
+            Check Registered: "Priya"
           </button>
-
+          <button
+            type="button"
+            className="button button--ghost"
+            onClick={() => lookupName('Rohan')}
+          >
+            Check Missing: "Rohan"
+          </button>
           {result?.entry && (
             <button type="button" className="button button--danger" onClick={distribute}>
-              Hand Out Kit & Check Out "{result.entry.key}"
+              Hand Out Kit & Checkout "{result.entry.key}"
             </button>
           )}
         </div>
@@ -76,13 +60,9 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
         {result && (
           <div className={`status-banner ${result.entry ? 'status-banner--success' : 'status-banner--warning'}`}>
             {result.entry ? (
-              <span>
-                <strong>✓ Found {result.entry.key}:</strong> {result.entry.value} in Shelf #{result.index} (1 jump)!
-              </span>
+              <span>✓ Found {result.entry.key}: {result.entry.value} in Shelf #{result.index}!</span>
             ) : (
-              <span>
-                <strong>Polite Fallback:</strong> Checked Shelf #{result.index} — "{query.trim()}" hasn't checked in yet. Zero crash!
-              </span>
+              <span>Polite Fallback: "{query}" not registered yet. Zero crash!</span>
             )}
           </div>
         )}
@@ -100,7 +80,7 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="The Big Picture: How Modern Society Runs →"
+        continueLabel="See the Big Picture →"
       />
     </section>
   );

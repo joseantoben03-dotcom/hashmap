@@ -28,60 +28,48 @@ export default function Step1Intro({ onContinue }) {
       } else {
         setCheckedCount(count);
       }
-    }, 40);
+    }, 35);
   }
 
   return (
     <section className="step">
-      <div className="story-header">
+      <div className="story-card-minimal">
         <span className="story-badge">{story.badge}</span>
         <h2 className="story-headline">{story.headline}</h2>
-      </div>
-
-      <div className="story-card">
-        <p className="story-micro">{story.microStory}</p>
-        <div className="story-quote-inline">
-          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
-        </div>
+        <p className="story-micro">{story.storyLine}</p>
       </div>
 
       <div className="interactive-demo-box">
-        <div className="demo-box__header">
-          <h4>Test the Bottleneck (List Scan)</h4>
-          <span className="demo-box__sub">Try searching for Mrs. Verma in a 10,000-person binder</span>
-        </div>
-
-        <div className="demo-box__body">
+        <div className="demo-box__actions">
           <button
             type="button"
             className="button button--primary"
             onClick={runListSearch}
             disabled={searching}
           >
-            {searching ? 'Flipping binder pages…' : '▶ Scan 10,000 Names (Sequential List Search)'}
+            {searching ? 'Flipping binder pages…' : '▶ Test Scan (Sequential List Search)'}
           </button>
-
-          {checkedCount > 0 && (
-            <div className="scan-progress">
-              <div className="scan-bar">
-                <div
-                  className="scan-bar__fill"
-                  style={{ width: `${(checkedCount / 10000) * 100}%` }}
-                />
-              </div>
-              <span className="scan-counter">
-                Scanned {checkedCount.toLocaleString()} / 10,000 pages
-                {searchDone && ' — Took 4 minutes per person!'}
-              </span>
-            </div>
-          )}
         </div>
+
+        {checkedCount > 0 && (
+          <div className="scan-progress">
+            <div className="scan-bar">
+              <div
+                className="scan-bar__fill"
+                style={{ width: `${(checkedCount / 10000) * 100}%` }}
+              />
+            </div>
+            <span className="scan-counter">
+              Scanned {checkedCount.toLocaleString()} / 10,000 items
+              {searchDone && ' — Took 4 minutes! (O(n) linear search)'}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="shelf-section">
         <div className="shelf-section__header">
-          <span>7 Community Relief Shelves (Empty)</span>
-          <span className="shelf-section__hint">Can we jump straight to the shelf without searching?</span>
+          <span>7 Relief Shelves (Empty)</span>
         </div>
         <BucketWall buckets={EMPTY_BUCKETS} />
       </div>

@@ -10,7 +10,6 @@ const EMPTY_BUCKETS = createBuckets();
 export default function Step2HashFunction({ onBack, onContinue }) {
   const story = STORY_STEPS[2];
   const [name, setName] = useState('Priya');
-  const [tried, setTried] = useState(true);
 
   const computation = useMemo(
     () => (name.trim() ? computeHash(name.trim(), BUCKET_COUNT) : null),
@@ -19,49 +18,37 @@ export default function Step2HashFunction({ onBack, onContinue }) {
 
   return (
     <section className="step">
-      <div className="story-header">
+      <div className="story-card-minimal">
         <span className="story-badge">{story.badge}</span>
         <h2 className="story-headline">{story.headline}</h2>
-      </div>
-
-      <div className="story-card">
-        <p className="story-micro">{story.microStory}</p>
-        <div className="story-quote-inline">
-          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
-        </div>
+        <p className="story-micro">{story.storyLine}</p>
       </div>
 
       <div className="interactive-demo-box">
+        <div className="button-row button-row--presets">
+          <span className="preset-label">Pick citizen:</span>
+          {CITIZEN_PRESETS.map((c) => (
+            <button
+              key={c.key}
+              type="button"
+              className="button button--chip"
+              onClick={() => setName(c.key)}
+            >
+              {c.key}
+            </button>
+          ))}
+        </div>
+
         <div className="field-row">
-          <label htmlFor="citizen-name">Arriving Citizen</label>
+          <label htmlFor="citizen-name">Or type name:</label>
           <input
             id="citizen-name"
             type="text"
             value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-              if (event.target.value.trim()) setTried(true);
-            }}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Type a name..."
             maxLength={20}
           />
-        </div>
-
-        <div className="button-row button-row--presets">
-          <span className="preset-label">Pick citizen:</span>
-          {CITIZEN_PRESETS.slice(0, 5).map((citizen) => (
-            <button
-              key={citizen.key}
-              type="button"
-              className="button button--chip"
-              onClick={() => {
-                setName(citizen.key);
-                setTried(true);
-              }}
-            >
-              {citizen.key}
-            </button>
-          ))}
         </div>
 
         <HashWorking computation={computation} />
@@ -75,12 +62,7 @@ export default function Step2HashFunction({ onBack, onContinue }) {
         />
       </div>
 
-      <StepFooter
-        onBack={onBack}
-        onContinue={onContinue}
-        continueLabel="Start Handing Out Relief Kits →"
-        hint={tried ? undefined : 'Pick or type a name to see their calculated shelf.'}
-      />
+      <StepFooter onBack={onBack} onContinue={onContinue} continueLabel="Start Filing Kits →" />
     </section>
   );
 }

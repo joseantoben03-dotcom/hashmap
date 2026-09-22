@@ -1,83 +1,62 @@
 import { useEffect, useState } from 'react';
-import { PYTHON_GENTLE_LESSONS } from '../data/caseStudy';
+import { STORY_STEPS } from '../data/caseStudy';
 
 export default function PythonConsole({ stepId }) {
-  const lesson = PYTHON_GENTLE_LESSONS[stepId] || PYTHON_GENTLE_LESSONS[1];
+  const stepData = STORY_STEPS[stepId] || STORY_STEPS[1];
 
-  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'check'
-  const [code, setCode] = useState(lesson.snippet);
-  const [terminalOutput, setTerminalOutput] = useState(lesson.output);
+  const [code, setCode] = useState(stepData.pythonSnippet);
+  const [terminalOutput, setTerminalOutput] = useState(stepData.pythonOutput);
   const [isRunning, setIsRunning] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedOpt, setSelectedOpt] = useState(null);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   useEffect(() => {
-    setCode(lesson.snippet);
-    setTerminalOutput(lesson.output);
-    setSelectedOption(null);
+    setCode(stepData.pythonSnippet);
+    setTerminalOutput(stepData.pythonOutput);
+    setShowQuiz(false);
+    setSelectedOpt(null);
     setQuizSubmitted(false);
-  }, [stepId, lesson]);
+  }, [stepId, stepData]);
 
   function handleRun() {
     setIsRunning(true);
     setTerminalOutput('Running in Python 3.12...\n');
-
     setTimeout(() => {
       setIsRunning(false);
-      setTerminalOutput(lesson.output);
-    }, 150);
-  }
-
-  function handleReset() {
-    setCode(lesson.snippet);
-    setTerminalOutput(lesson.output);
+      setTerminalOutput(stepData.pythonOutput);
+    }, 120);
   }
 
   return (
-    <aside className="python-console" aria-label="Gentle Python Companion">
+    <aside className="python-console" aria-label="Python Companion">
       <div className="python-console__header">
         <div className="python-console__badge">
           <span className="python-icon">🐍</span>
           <span className="python-console__filename">volunteer_hub.py</span>
         </div>
-        <span className="python-console__tag">{lesson.concept}</span>
-      </div>
-
-      <div className="python-console__nav">
         <button
           type="button"
-          className={`python-console__tab${activeTab === 'code' ? ' python-console__tab--active' : ''}`}
-          onClick={() => setActiveTab('code')}
+          className="btn-quiz-toggle"
+          onClick={() => setShowQuiz(!showQuiz)}
         >
-          Try in Python
-        </button>
-        <button
-          type="button"
-          className={`python-console__tab${activeTab === 'check' ? ' python-console__tab--active' : ''}`}
-          onClick={() => setActiveTab('check')}
-        >
-          Quick Check {quizSubmitted && selectedOption === lesson.challenge.correctIndex ? '✓' : ''}
+          {showQuiz ? '◄ View Code' : '⚡ Quick Check'}
         </button>
       </div>
 
       <div className="python-console__body">
-        {activeTab === 'code' && (
+        {!showQuiz ? (
           <div className="python-console__pane">
             <div className="code-editor-header">
-              <span className="code-editor-title">Python Snippet (Editable)</span>
-              <div className="code-editor-actions">
-                <button type="button" className="btn-small" onClick={handleReset}>
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  className="btn-small btn-small--run"
-                  onClick={handleRun}
-                  disabled={isRunning}
-                >
-                  {isRunning ? 'Running…' : '▶ Run Code'}
-                </button>
-              </div>
+              <span className="code-editor-title">Python Code (Editable)</span>
+              <button
+                type="button"
+                className="btn-small btn-small--run"
+                onClick={handleRun}
+                disabled={isRunning}
+              >
+                {isRunning ? 'Running…' : '▶ Run Code'}
+              </button>
             </div>
 
             <textarea
@@ -85,31 +64,20 @@ export default function PythonConsole({ stepId }) {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               spellCheck={false}
-              rows={8}
+              rows={5}
             />
 
             <div className="python-terminal">
-              <div className="python-terminal__header">
-                <span>Output Console</span>
-              </div>
               <pre className="python-terminal__output">{terminalOutput}</pre>
             </div>
-
-            <div className="mini-insight">
-              <strong>Takeaway:</strong> {lesson.oneLinerNote}
-            </div>
           </div>
-        )}
-
-        {activeTab === 'check' && (
+        ) : (
           <div className="python-console__pane python-console__quiz">
-            <h3>Quick Check</h3>
-            <p className="quiz-question">{lesson.challenge.question}</p>
-
+            <p className="quiz-question">{stepData.quiz.question}</p>
             <div className="quiz-options">
-              {lesson.challenge.options.map((opt, idx) => {
-                const isSelected = selectedOption === idx;
-                const isCorrect = idx === lesson.challenge.correctIndex;
+              {stepData.quiz.options.map((opt, idx) => {
+                const isSelected = selectedOpt === idx;
+                const isCorrect = idx === stepData.quiz.correctIndex;
                 let optClass = 'quiz-option';
                 if (quizSubmitted) {
                   if (isCorrect) optClass += ' quiz-option--correct';
@@ -124,7 +92,7 @@ export default function PythonConsole({ stepId }) {
                     type="button"
                     className={optClass}
                     onClick={() => {
-                      setSelectedOption(idx);
+                      setSelectedOpt(idx);
                       setQuizSubmitted(true);
                     }}
                   >
@@ -138,20 +106,14 @@ export default function PythonConsole({ stepId }) {
             {quizSubmitted && (
               <div
                 className={`quiz-feedback ${
-                  selectedOption === lesson.challenge.correctIndex
+                  selectedOpt === stepData.quiz.correctIndex
                     ? 'quiz-feedback--success'
                     : 'quiz-feedback--error'
                 }`}
               >
-                {selectedOption === lesson.challenge.correctIndex ? (
-                  <>
-                    <strong>✓ Exactly right!</strong> {lesson.challenge.feedback}
-                  </>
-                ) : (
-                  <>
-                    <strong>✕ Not quite:</strong> Give it another try!
-                  </>
-                )}
+                {selectedOpt === stepData.quiz.correctIndex
+                  ? stepData.quiz.feedback
+                  : 'Not quite! Try again.'}
               </div>
             )}
           </div>
