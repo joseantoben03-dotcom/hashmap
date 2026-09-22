@@ -15,10 +15,19 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
   return (
     <section className="step">
-      <div className="story-card-minimal">
-        <span className="story-badge">{story.badge}</span>
-        <h2 className="story-headline">{story.headline}</h2>
-        <p className="story-micro">{story.storyLine}</p>
+      <div className="story-act-card">
+        <span className="story-act-badge">{story.badge}</span>
+        <h2 className="story-act-title">{story.headline}</h2>
+
+        <div className="character-speech-bubble">
+          <div className="character-avatar">{story.character.avatar}</div>
+          <div className="speech-content">
+            <span className="character-name">{story.character.name}</span>
+            <p className="character-dialogue">{story.dialogue}</p>
+          </div>
+        </div>
+
+        <p className="story-narrative-text">{story.narrative}</p>
       </div>
 
       <div className="interactive-demo-box">
@@ -34,7 +43,7 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
       <p className="step-note">
         {filed === 0
-          ? 'You completed the journey of hashing and Python dictionaries.'
+          ? 'You completed the story of hashing and Python dictionaries.'
           : `Together with Dev, you organized ${filed} relief kit${filed === 1 ? '' : 's'} with zero waiting in line.`}
       </p>
 

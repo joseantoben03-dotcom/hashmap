@@ -18,10 +18,19 @@ export default function Step2HashFunction({ onBack, onContinue }) {
 
   return (
     <section className="step">
-      <div className="story-card-minimal">
-        <span className="story-badge">{story.badge}</span>
-        <h2 className="story-headline">{story.headline}</h2>
-        <p className="story-micro">{story.storyLine}</p>
+      <div className="story-act-card">
+        <span className="story-act-badge">{story.badge}</span>
+        <h2 className="story-act-title">{story.headline}</h2>
+
+        <div className="character-speech-bubble">
+          <div className="character-avatar">{story.character.avatar}</div>
+          <div className="speech-content">
+            <span className="character-name">{story.character.name}</span>
+            <p className="character-dialogue">{story.dialogue}</p>
+          </div>
+        </div>
+
+        <p className="story-narrative-text">{story.narrative}</p>
       </div>
 
       <div className="interactive-demo-box">
