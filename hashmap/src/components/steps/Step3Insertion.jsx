@@ -24,90 +24,81 @@ export default function Step3Insertion({ buckets, onInsert, onBack, onContinue }
 
   return (
     <section className="step">
-      <div className="story-badge">{story.badge}</div>
-      <h2 className="story-headline">{story.headline}</h2>
-
-      <div className="story-vignette">
-        {story.story.map((paragraph, idx) => (
-          <p key={idx} className="story-text">
-            {paragraph}
-          </p>
-        ))}
+      <div className="story-header">
+        <span className="story-badge">{story.badge}</span>
+        <h2 className="story-headline">{story.headline}</h2>
       </div>
 
-      <div className="story-quote">
-        <span className="story-quote__mark">“</span>
-        <div className="story-quote__content">
-          <p className="story-quote__text">{story.quote.text}</p>
-          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+      <div className="story-card">
+        <p className="story-micro">{story.microStory}</p>
+        <div className="story-quote-inline">
+          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
         </div>
       </div>
 
-      <div className="field-row">
-        <label htmlFor="citizen-input">Citizen Name</label>
-        <input
-          id="citizen-input"
-          type="text"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="e.g. Aarav"
-          maxLength={20}
-        />
-      </div>
-      <div className="field-row">
-        <label htmlFor="kit-input">Relief Kit / Item</label>
-        <input
-          id="kit-input"
-          type="text"
-          value={kit}
-          onChange={(event) => setKit(event.target.value)}
-          placeholder="e.g. Ration Kit A"
-          maxLength={28}
-        />
-      </div>
+      <div className="interactive-demo-box">
+        <div className="button-row button-row--presets">
+          <span className="preset-label">1-Click Enroll Citizens:</span>
+          {CITIZEN_PRESETS.map((citizen) => (
+            <button
+              key={citizen.key}
+              type="button"
+              className="button button--ghost"
+              onClick={() => fileKit(citizen.key, citizen.value)}
+            >
+              + {citizen.key} ({citizen.value})
+            </button>
+          ))}
+        </div>
 
-      <HashWorking computation={preview} emptyHint="Enter a name and kit to see which shelf it belongs on." />
-
-      <div className="button-row">
-        <button
-          type="button"
-          className="button button--primary"
-          onClick={() => fileKit(name, kit)}
-          disabled={!name.trim() || !kit.trim()}
-        >
-          File Kit to Shelf
-        </button>
-
-        <span className="preset-label">Quick Register:</span>
-        {CITIZEN_PRESETS.slice(0, 4).map((citizen) => (
+        <div className="field-row-group">
+          <div className="field-row">
+            <label htmlFor="citizen-input">Name</label>
+            <input
+              id="citizen-input"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Ananya"
+              maxLength={20}
+            />
+          </div>
+          <div className="field-row">
+            <label htmlFor="kit-input">Relief Kit</label>
+            <input
+              id="kit-input"
+              type="text"
+              value={kit}
+              onChange={(e) => setKit(e.target.value)}
+              placeholder="e.g. Water Pack"
+              maxLength={24}
+            />
+          </div>
           <button
-            key={citizen.key}
             type="button"
-            className="button button--ghost"
-            onClick={() => fileKit(citizen.key, citizen.value)}
+            className="button button--primary"
+            onClick={() => fileKit(name, kit)}
+            disabled={!name.trim() || !kit.trim()}
           >
-            + {citizen.key} ({citizen.category})
+            File to Shelf
           </button>
-        ))}
+        </div>
+
+        {name.trim() && <HashWorking computation={preview} />}
       </div>
 
-      <BucketWall buckets={buckets} highlightIndex={lastIndex} highlightVariant="insert" />
-
-      <div className="story-insight">
-        <strong>💡 The Social Insight:</strong> {story.insight}
+      <div className="shelf-section">
+        <div className="shelf-section__header">
+          <span>Relief Shelves ({filed} kit{filed === 1 ? '' : 's'} filed in 0.0001s)</span>
+        </div>
+        <BucketWall buckets={buckets} highlightIndex={lastIndex} highlightVariant="insert" />
       </div>
-
-      <p className="step-note">
-        {filed === 0
-          ? 'The shelves are currently empty.'
-          : `${filed} relief kit${filed === 1 ? '' : 's'} assigned to families with zero searching.`}
-      </p>
 
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
         continueLabel="What If Two People Get the Same Shelf? →"
-        hint={filed < 2 ? 'Assign at least two relief kits to see how shelves fill in.' : undefined}
+        hint={filed < 2 ? 'Enroll at least 2 citizens to see the shelves fill in.' : undefined}
       />
     </section>
   );

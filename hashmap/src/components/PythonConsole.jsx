@@ -4,7 +4,7 @@ import { PYTHON_GENTLE_LESSONS } from '../data/caseStudy';
 export default function PythonConsole({ stepId }) {
   const lesson = PYTHON_GENTLE_LESSONS[stepId] || PYTHON_GENTLE_LESSONS[1];
 
-  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'concept' | 'check'
+  const [activeTab, setActiveTab] = useState('code'); // 'code' | 'check'
   const [code, setCode] = useState(lesson.snippet);
   const [terminalOutput, setTerminalOutput] = useState(lesson.output);
   const [isRunning, setIsRunning] = useState(false);
@@ -25,7 +25,7 @@ export default function PythonConsole({ stepId }) {
     setTimeout(() => {
       setIsRunning(false);
       setTerminalOutput(lesson.output);
-    }, 200);
+    }, 150);
   }
 
   function handleReset() {
@@ -53,13 +53,6 @@ export default function PythonConsole({ stepId }) {
         </button>
         <button
           type="button"
-          className={`python-console__tab${activeTab === 'concept' ? ' python-console__tab--active' : ''}`}
-          onClick={() => setActiveTab('concept')}
-        >
-          Why Python Does This
-        </button>
-        <button
-          type="button"
           className={`python-console__tab${activeTab === 'check' ? ' python-console__tab--active' : ''}`}
           onClick={() => setActiveTab('check')}
         >
@@ -71,7 +64,7 @@ export default function PythonConsole({ stepId }) {
         {activeTab === 'code' && (
           <div className="python-console__pane">
             <div className="code-editor-header">
-              <span className="code-editor-title">Python Code (Editable)</span>
+              <span className="code-editor-title">Python Snippet (Editable)</span>
               <div className="code-editor-actions">
                 <button type="button" className="btn-small" onClick={handleReset}>
                   Reset
@@ -92,7 +85,7 @@ export default function PythonConsole({ stepId }) {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               spellCheck={false}
-              rows={9}
+              rows={8}
             />
 
             <div className="python-terminal">
@@ -103,29 +96,14 @@ export default function PythonConsole({ stepId }) {
             </div>
 
             <div className="mini-insight">
-              <strong>{lesson.oneLinerTitle}</strong> {lesson.oneLinerNote}
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'concept' && (
-          <div className="python-console__pane python-console__explanation">
-            <h3>{lesson.title}</h3>
-            <p className="concept-explanation">{lesson.explanation}</p>
-
-            <div className="callout callout--tip">
-              <strong>The Everyday Parallel:</strong>
-              <p>
-                Think of Python’s dictionary like an address book or coat-check token: you never
-                search from page 1 to the end. The label itself takes you straight to the person.
-              </p>
+              <strong>Takeaway:</strong> {lesson.oneLinerNote}
             </div>
           </div>
         )}
 
         {activeTab === 'check' && (
           <div className="python-console__pane python-console__quiz">
-            <h3>Friendly Check</h3>
+            <h3>Quick Check</h3>
             <p className="quiz-question">{lesson.challenge.question}</p>
 
             <div className="quiz-options">
@@ -171,7 +149,7 @@ export default function PythonConsole({ stepId }) {
                   </>
                 ) : (
                   <>
-                    <strong>✕ Not quite:</strong> Check the code tab again and give it another shot!
+                    <strong>✕ Not quite:</strong> Give it another try!
                   </>
                 )}
               </div>

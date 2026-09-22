@@ -9,17 +9,17 @@ const EMPTY_BUCKETS = createBuckets();
 export default function Step1Intro({ onContinue }) {
   const story = STORY_STEPS[1];
   const [searching, setSearching] = useState(false);
-  const [searchDone, setSearchDone] = useState(false);
   const [checkedCount, setCheckedCount] = useState(0);
+  const [searchDone, setSearchDone] = useState(false);
 
-  function simulateSlowSearch() {
+  function runListSearch() {
     setSearching(true);
     setSearchDone(false);
     setCheckedCount(0);
 
     let count = 0;
     const interval = setInterval(() => {
-      count += 850;
+      count += 1250;
       if (count >= 10000) {
         clearInterval(interval);
         setCheckedCount(10000);
@@ -33,63 +33,60 @@ export default function Step1Intro({ onContinue }) {
 
   return (
     <section className="step">
-      <div className="story-badge">{story.badge}</div>
-      <h2 className="story-headline">{story.headline}</h2>
-
-      <div className="story-vignette">
-        {story.story.map((paragraph, idx) => (
-          <p key={idx} className="story-text">
-            {paragraph}
-          </p>
-        ))}
+      <div className="story-header">
+        <span className="story-badge">{story.badge}</span>
+        <h2 className="story-headline">{story.headline}</h2>
       </div>
 
-      <div className="story-quote">
-        <span className="story-quote__mark">“</span>
-        <div className="story-quote__content">
-          <p className="story-quote__text">{story.quote.text}</p>
-          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+      <div className="story-card">
+        <p className="story-micro">{story.microStory}</p>
+        <div className="story-quote-inline">
+          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
         </div>
       </div>
 
-      {/* Interactive Demonstration: Feel the difference */}
-      <div className="simulation-card">
-        <h4>Experience the Social Bottleneck:</h4>
-        <p className="simulation-prompt">
-          Try finding Mrs. Verma in the 10,000-person paper binder:
-        </p>
+      <div className="interactive-demo-box">
+        <div className="demo-box__header">
+          <h4>Test the Bottleneck (List Scan)</h4>
+          <span className="demo-box__sub">Try searching for Mrs. Verma in a 10,000-person binder</span>
+        </div>
 
-        <div className="simulation-actions">
+        <div className="demo-box__body">
           <button
             type="button"
             className="button button--primary"
-            onClick={simulateSlowSearch}
+            onClick={runListSearch}
             disabled={searching}
           >
-            {searching ? 'Flipping pages…' : 'Search 10,000 Names Sequentially'}
+            {searching ? 'Flipping binder pages…' : '▶ Scan 10,000 Names (Sequential List Search)'}
           </button>
 
           {checkedCount > 0 && (
-            <span className="simulation-counter">
-              Checked <strong>{checkedCount.toLocaleString()}</strong> of 10,000 pages…{' '}
-              {searchDone && 'Found! (Took 4 whole minutes in real life)'}
-            </span>
+            <div className="scan-progress">
+              <div className="scan-bar">
+                <div
+                  className="scan-bar__fill"
+                  style={{ width: `${(checkedCount / 10000) * 100}%` }}
+                />
+              </div>
+              <span className="scan-counter">
+                Scanned {checkedCount.toLocaleString()} / 10,000 pages
+                {searchDone && ' — Took 4 minutes per person!'}
+              </span>
+            </div>
           )}
         </div>
       </div>
 
-      <div className="story-insight">
-        <strong>💡 The Social Insight:</strong> {story.insight}
+      <div className="shelf-section">
+        <div className="shelf-section__header">
+          <span>7 Community Relief Shelves (Empty)</span>
+          <span className="shelf-section__hint">Can we jump straight to the shelf without searching?</span>
+        </div>
+        <BucketWall buckets={EMPTY_BUCKETS} />
       </div>
 
-      <p className="shelf-intro-text">
-        Here are the 7 empty relief shelves Dev just set up behind the desk. Let’s see how a simple
-        social invention changes everything:
-      </p>
-
-      <BucketWall buckets={EMPTY_BUCKETS} />
-
-      <StepFooter onContinue={onContinue} continueLabel="See the Coat-Check & PIN Code Trick →" />
+      <StepFooter onContinue={onContinue} continueLabel="See the Coat-Check Trick →" />
     </section>
   );
 }

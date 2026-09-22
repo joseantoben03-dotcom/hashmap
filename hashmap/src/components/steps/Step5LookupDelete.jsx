@@ -28,82 +28,73 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
 
   return (
     <section className="step">
-      <div className="story-badge">{story.badge}</div>
-      <h2 className="story-headline">{story.headline}</h2>
-
-      <div className="story-vignette">
-        {story.story.map((paragraph, idx) => (
-          <p key={idx} className="story-text">
-            {paragraph}
-          </p>
-        ))}
+      <div className="story-header">
+        <span className="story-badge">{story.badge}</span>
+        <h2 className="story-headline">{story.headline}</h2>
       </div>
 
-      <div className="story-quote">
-        <span className="story-quote__mark">“</span>
-        <div className="story-quote__content">
-          <p className="story-quote__text">{story.quote.text}</p>
-          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+      <div className="story-card">
+        <p className="story-micro">{story.story || story.microStory}</p>
+        <div className="story-quote-inline">
+          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
         </div>
       </div>
 
-      <div className="field-row">
-        <label htmlFor="lookup-name">Search Name</label>
-        <input
-          id="lookup-name"
-          type="text"
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value);
-            setResult(null);
-          }}
-          placeholder="e.g. Priya, Kabir, or a stranger"
-          maxLength={20}
-        />
-      </div>
+      <div className="interactive-demo-box">
+        <div className="field-row">
+          <label htmlFor="lookup-name">Check Citizen</label>
+          <input
+            id="lookup-name"
+            type="text"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setResult(null);
+            }}
+            placeholder="e.g. Priya or Rohan"
+            maxLength={20}
+          />
+        </div>
 
-      <div className="button-row">
-        <button
-          type="button"
-          className="button button--primary"
-          onClick={lookup}
-          disabled={!query.trim()}
-        >
-          Check Shelf (Instant Inquiry)
-        </button>
-
-        {result?.entry && (
-          <button type="button" className="button button--danger" onClick={distribute}>
-            Hand Over Kit & Check Out "{result.entry.key}"
+        <div className="button-row">
+          <button
+            type="button"
+            className="button button--primary"
+            onClick={lookup}
+            disabled={!query.trim()}
+          >
+            ▶ Instant Inquiry (`.get()`)
           </button>
+
+          {result?.entry && (
+            <button type="button" className="button button--danger" onClick={distribute}>
+              Hand Out Kit & Check Out "{result.entry.key}"
+            </button>
+          )}
+        </div>
+
+        {result && (
+          <div className={`status-banner ${result.entry ? 'status-banner--success' : 'status-banner--warning'}`}>
+            {result.entry ? (
+              <span>
+                <strong>✓ Found {result.entry.key}:</strong> {result.entry.value} in Shelf #{result.index} (1 jump)!
+              </span>
+            ) : (
+              <span>
+                <strong>Polite Fallback:</strong> Checked Shelf #{result.index} — "{query.trim()}" hasn't checked in yet. Zero crash!
+              </span>
+            )}
+          </div>
         )}
       </div>
 
-      {result && (
-        <div className={`callout ${result.entry ? 'callout--tip' : 'callout--warning'}`}>
-          {result.entry ? (
-            <p>
-              <strong>✓ Found "{result.entry.key}":</strong> Assigned {result.entry.value} in Shelf #
-              {result.index}. Located instantly in 1 jump checking {result.probes} box{result.probes === 1 ? '' : 'es'}!
-            </p>
-          ) : (
-            <p>
-              <strong>Not Yet Registered:</strong> Checked Shelf #{result.index}. "{query.trim()}" is
-              not on the shelf yet. (Dev calmly directs them to Desk 1 without panicking).
-            </p>
-          )}
-        </div>
-      )}
-
-      <BucketWall
-        buckets={buckets}
-        highlightIndex={result ? result.index : bucketForQuery}
-        highlightVariant={result ? (result.entry ? 'found' : 'miss') : 'compute'}
-        probedKeys={probedKeys}
-      />
-
-      <div className="story-insight">
-        <strong>💡 The Social Insight:</strong> {story.insight}
+      <div className="shelf-section">
+        <BucketWall
+          buckets={buckets}
+          highlightIndex={result ? result.index : bucketForQuery}
+          highlightVariant={result ? (result.entry ? 'found' : 'miss') : 'compute'}
+          probedKeys={probedKeys}
+        />
       </div>
 
       <StepFooter

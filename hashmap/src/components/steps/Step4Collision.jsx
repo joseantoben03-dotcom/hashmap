@@ -18,59 +18,47 @@ export default function Step4Collision({ buckets, onInsert, onBack, onContinue }
 
   return (
     <section className="step">
-      <div className="story-badge">{story.badge}</div>
-      <h2 className="story-headline">{story.headline}</h2>
-
-      <div className="story-vignette">
-        {story.story.map((paragraph, idx) => (
-          <p key={idx} className="story-text">
-            {paragraph}
-          </p>
-        ))}
+      <div className="story-header">
+        <span className="story-badge">{story.badge}</span>
+        <h2 className="story-headline">{story.headline}</h2>
       </div>
 
-      <div className="story-quote">
-        <span className="story-quote__mark">“</span>
-        <div className="story-quote__content">
-          <p className="story-quote__text">{story.quote.text}</p>
-          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+      <div className="story-card">
+        <p className="story-micro">{story.microStory}</p>
+        <div className="story-quote-inline">
+          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
         </div>
       </div>
 
-      <div className="button-row">
-        <button
-          type="button"
-          className="button button--primary"
-          onClick={runDemo}
-          disabled={demoRun}
-        >
-          {demoRun ? 'Amit & Mita Accommodated' : "Amit & Mita Arrive (Trigger Clash)"}
-        </button>
-      </div>
-
-      {demoRun && (
-        <div className="callout callout--tip">
-          <strong>Roommates on Shelf #{collisionIndex}:</strong> Both <strong>Amit</strong> and{' '}
-          <strong>Mita</strong> share the same letters, calculating to Shelf #{collisionIndex}. Dev
-          politely stacks both boxes side-by-side. Neither family is turned away!
+      <div className="interactive-demo-box">
+        <div className="button-row">
+          <button
+            type="button"
+            className="button button--primary"
+            onClick={runDemo}
+            disabled={demoRun}
+          >
+            {demoRun ? '✓ Roommates Filed on Shelf #1' : "▶ File Amit & Mita (Trigger Anagram Clash)"}
+          </button>
         </div>
-      )}
 
-      <BucketWall
-        buckets={buckets}
-        highlightIndex={demoRun ? collisionIndex : null}
-        highlightVariant="insert"
-      />
-
-      <div className="story-insight">
-        <strong>💡 The Social Insight:</strong> {story.insight}
+        {demoRun && (
+          <div className="status-banner status-banner--info">
+            <strong>Roommates on Shelf #{collisionIndex}:</strong> Amit and Mita share the same letters (A-M-I-T), hashing to Shelf #{collisionIndex}. Both are safely stored side-by-side!
+          </div>
+        )}
       </div>
 
-      <p className="step-note">
-        {maxChain > 1
-          ? `Busiest shelf right now: ${maxChain} boxes sharing a single shelf.`
-          : 'Click the button above to see what happens when two citizens calculate to the exact same shelf.'}
-      </p>
+      <div className="shelf-section">
+        <div className="shelf-section__header">
+          <span>Relief Shelves (Busiest Shelf: {maxChain} items)</span>
+        </div>
+        <BucketWall
+          buckets={buckets}
+          highlightIndex={demoRun ? collisionIndex : null}
+          highlightVariant="insert"
+        />
+      </div>
 
       <StepFooter
         onBack={onBack}

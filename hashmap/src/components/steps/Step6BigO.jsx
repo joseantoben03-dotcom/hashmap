@@ -3,10 +3,10 @@ import { STORY_STEPS } from '../../data/caseStudy';
 import StepFooter from '../StepFooter';
 
 const SOCIAL_EXAMPLES = [
-  { service: 'UPI Payments (GPay/PhonePe)', whatItDoes: 'Instant bank account lookup by mobile number', speed: 'O(1) instant' },
-  { service: 'Food Delivery (Swiggy/Zomato)', whatItDoes: 'Instant live order tracking among millions of deliveries', speed: 'O(1) instant' },
-  { service: 'Aadhaar / National ID', whatItDoes: 'Preventing duplicate voter or ration registration in seconds', speed: 'O(1) instant' },
-  { service: 'Instagram / WhatsApp', whatItDoes: 'Checking if a username is taken, loading contact chats', speed: 'O(1) instant' }
+  { service: 'UPI Payments (GPay/PhonePe)', whatItDoes: 'Finds bank account from phone # in 0.001s', speed: 'O(1) Instant' },
+  { service: 'Food Delivery (Swiggy/Zomato)', whatItDoes: 'Tracks 1,000,000 live orders by order ID', speed: 'O(1) Instant' },
+  { service: 'Aadhaar / National ID', whatItDoes: 'Verifies citizen token without duplicate scans', speed: 'O(1) Instant' },
+  { service: 'Instagram / WhatsApp', whatItDoes: 'Checks if username is free & opens chat', speed: 'O(1) Instant' }
 ];
 
 export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
@@ -15,50 +15,40 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
   return (
     <section className="step">
-      <div className="story-badge">{story.badge}</div>
-      <h2 className="story-headline">{story.headline}</h2>
-
-      <div className="story-vignette">
-        {story.story.map((paragraph, idx) => (
-          <p key={idx} className="story-text">
-            {paragraph}
-          </p>
-        ))}
+      <div className="story-header">
+        <span className="story-badge">{story.badge}</span>
+        <h2 className="story-headline">{story.headline}</h2>
       </div>
 
-      <div className="story-quote">
-        <span className="story-quote__mark">“</span>
-        <div className="story-quote__content">
-          <p className="story-quote__text">{story.quote.text}</p>
-          <span className="story-quote__speaker">— {story.quote.speaker}</span>
+      <div className="story-card">
+        <p className="story-micro">{story.microStory}</p>
+        <div className="story-quote-inline">
+          <span className="quote-speaker">{story.quote.speaker}:</span> “{story.quote.text}”
         </div>
       </div>
 
-      <h4 className="section-subhead">Where Hashing Keeps Society Moving Every Second:</h4>
-      <div className="social-grid">
-        {SOCIAL_EXAMPLES.map((item) => (
-          <div key={item.service} className="social-card">
-            <span className="social-card__name">{item.service}</span>
-            <span className="social-card__desc">{item.whatItDoes}</span>
-            <span className="social-card__badge">{item.speed}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="story-insight">
-        <strong>💡 The Social Insight:</strong> {story.insight}
+      <div className="interactive-demo-box">
+        <div className="social-grid">
+          {SOCIAL_EXAMPLES.map((item) => (
+            <div key={item.service} className="social-card">
+              <span className="social-card__name">{item.service}</span>
+              <span className="social-card__desc">{item.whatItDoes}</span>
+              <span className="social-card__badge">{item.speed}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <p className="step-note">
         {filed === 0
-          ? 'You experienced the full journey of hashing and Python dictionaries.'
+          ? 'You experienced how hashing and Python dictionaries run modern society.'
           : `Together with Dev, you organized and safeguarded ${filed} relief kit${filed === 1 ? '' : 's'} today.`}
       </p>
 
       <StepFooter
         onBack={onBack}
         onContinue={onFinish}
-        continueLabel={isFinished ? 'Journey Complete ✓' : 'Finish Story'}
+        continueLabel={isFinished ? 'Story Complete ✓' : 'Finish Story'}
       />
     </section>
   );
