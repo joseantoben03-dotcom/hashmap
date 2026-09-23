@@ -76,12 +76,12 @@ function App() {
         <header className="main-pane__header">
           <div className="main-pane__header-left">
             <span className="main-pane__eyebrow">
-              Scene {currentMeta.id} of {TOTAL_STEPS} • {currentMeta.concept}
+              Act {currentMeta.id} of {TOTAL_STEPS} • {currentMeta.concept}
             </span>
             <h1 className="main-pane__title">{currentMeta.title}</h1>
           </div>
           <div className="main-pane__progress-badge">
-            <span>{Math.round((completedSteps.length / TOTAL_STEPS) * 100)}% Through the Story</span>
+            <span>{Math.round((completedSteps.length / TOTAL_STEPS) * 100)}% Progress</span>
           </div>
         </header>
 

@@ -8,11 +8,11 @@ export default function StepSidebar({
   onReset
 }) {
   return (
-    <nav className="sidebar" aria-label="Story scenes">
+    <nav className="sidebar" aria-label="Story acts">
       <div className="sidebar__header">
-        <div className="sidebar__institution-badge">INTERACTIVE STORY</div>
-        <h1>The Endless Line</h1>
-        <p className="sidebar__subtitle">How Hashing & Python Run Modern Society</p>
+        <div className="sidebar__institution-badge">MAGIC STORY</div>
+        <h1>The Magic Locker</h1>
+        <p className="sidebar__subtitle">How Hash Maps & Python Work</p>
       </div>
 
       <ol className="drawer-list">
@@ -35,7 +35,7 @@ export default function StepSidebar({
                   {isDone ? '✓' : step.id}
                 </span>
                 <span className="drawer__labels">
-                  <span className="drawer__label">Scene {step.id}</span>
+                  <span className="drawer__label">Act {step.id}</span>
                   <span className="drawer__title">{step.title}</span>
                 </span>
               </button>

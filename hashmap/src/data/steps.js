@@ -1,46 +1,10 @@
 export const STEPS = [
-  {
-    id: 1,
-    title: 'The Endless Line',
-    drawerLabel: 'The Crisis',
-    concept: 'Waiting in line vs. Direct tokens',
-    pythonTopic: 'The problem with lists'
-  },
-  {
-    id: 2,
-    title: 'The Magic Ticket',
-    drawerLabel: 'The Trick',
-    concept: 'Turning a name into a shelf number',
-    pythonTopic: 'hash() & permanent keys'
-  },
-  {
-    id: 3,
-    title: 'A Home for Everyone',
-    drawerLabel: 'The Home',
-    concept: 'Filing & instant retrieval',
-    pythonTopic: 'dict[name] = kit'
-  },
-  {
-    id: 4,
-    title: 'Two People, One Shelf',
-    drawerLabel: 'Roommates',
-    concept: 'When calculations collide',
-    pythonTopic: 'Smart collision handling'
-  },
-  {
-    id: 5,
-    title: 'Are They on the List?',
-    drawerLabel: 'Inquiry',
-    concept: 'Searching without panic',
-    pythonTopic: 'Polite lookups with .get()'
-  },
-  {
-    id: 6,
-    title: 'The Invisible City',
-    drawerLabel: 'Big Picture',
-    concept: 'How modern society runs on this',
-    pythonTopic: 'defaultdict & Counter'
-  }
+  { id: 1, title: 'The Messy Lunch Pile', drawerLabel: 'Act 1', concept: 'Messy pile vs. Magic locker' },
+  { id: 2, title: 'The Magic Secret Rule', drawerLabel: 'Act 2', concept: 'Name -> Locker calculation' },
+  { id: 3, title: 'Opening Locker #5', drawerLabel: 'Act 3', concept: 'Python dictionary dict' },
+  { id: 4, title: 'Locker Roommates', drawerLabel: 'Act 4', concept: 'Handling collisions' },
+  { id: 5, title: 'Is My Lunch Here?', drawerLabel: 'Act 5', concept: 'Safe .get() lookups' },
+  { id: 6, title: 'Magic in Real Life', drawerLabel: 'Act 6', concept: 'Roblox, YouTube, GPay' }
 ];
 
 export const TOTAL_STEPS = STEPS.length;

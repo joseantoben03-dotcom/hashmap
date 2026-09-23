@@ -2,11 +2,11 @@ import { totalEntries } from '../../lib/hashmap';
 import { STORY_STEPS } from '../../data/caseStudy';
 import StepFooter from '../StepFooter';
 
-const SOCIAL_EXAMPLES = [
-  { service: 'UPI Payments (GPay/PhonePe)', desc: 'Mobile # -> Bank account (0.001s)' },
-  { service: 'Food Delivery (Swiggy/Zomato)', desc: 'Order ID -> Live tracker' },
-  { service: 'Aadhaar ID System', desc: 'Citizen Token -> Voter registry' },
-  { service: 'Instagram & WhatsApp', desc: 'Username -> Chat history' }
+const REAL_WORLD_CARDS = [
+  { game: 'Roblox', desc: 'Loads your player profile & skin instantly from player ID' },
+  { game: 'YouTube', desc: 'Finds & plays video in 0.001s using video ID string' },
+  { game: 'Fortnite', desc: 'Checks V-Bucks balance instantly without searching millions of accounts' },
+  { game: 'Google Pay', desc: 'Connects mobile # to bank account for 1-second payments' }
 ];
 
 export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
@@ -15,26 +15,18 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
   return (
     <section className="step">
-      <div className="story-act-card">
-        <span className="story-act-badge">{story.badge}</span>
-        <h2 className="story-act-title">{story.headline}</h2>
-
-        <div className="character-speech-bubble">
-          <div className="character-avatar">{story.character.avatar}</div>
-          <div className="speech-content">
-            <span className="character-name">{story.character.name}</span>
-            <p className="character-dialogue">{story.dialogue}</p>
-          </div>
-        </div>
-
-        <p className="story-narrative-text">{story.narrative}</p>
+      <div className="story-card-modern">
+        <span className="story-badge-neon">{story.badge}</span>
+        <h2 className="story-title-modern">{story.title}</h2>
+        <p className="story-headline-modern">{story.headline}</p>
+        <p className="story-text-simple">{story.storyLine}</p>
       </div>
 
-      <div className="interactive-demo-box">
+      <div className="interactive-card">
         <div className="social-grid">
-          {SOCIAL_EXAMPLES.map((item) => (
-            <div key={item.service} className="social-card">
-              <span className="social-card__name">{item.service}</span>
+          {REAL_WORLD_CARDS.map((item) => (
+            <div key={item.game} className="social-card">
+              <span className="social-card__name">{item.game}</span>
               <span className="social-card__desc">{item.desc}</span>
             </div>
           ))}
@@ -43,8 +35,8 @@ export default function Step6BigO({ buckets, onBack, onFinish, isFinished }) {
 
       <p className="step-note">
         {filed === 0
-          ? 'You completed the story of hashing and Python dictionaries.'
-          : `Together with Dev, you organized ${filed} relief kit${filed === 1 ? '' : 's'} with zero waiting in line.`}
+          ? 'You completed the Magic Locker story!'
+          : `All ${filed} lunchbox${filed === 1 ? '' : 'es'} were grabbed in 1 second flat! Zero waiting!` }
       </p>
 
       <StepFooter

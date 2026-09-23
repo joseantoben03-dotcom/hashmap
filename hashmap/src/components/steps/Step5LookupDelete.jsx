@@ -6,16 +6,16 @@ import StepFooter from '../StepFooter';
 
 export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinue }) {
   const story = STORY_STEPS[5];
-  const [query, setQuery] = useState('Priya');
+  const [query, setQuery] = useState('Timmy');
   const [result, setResult] = useState(null);
 
-  function lookupName(q) {
+  function checkLocker(q) {
     if (!q.trim()) return;
     setQuery(q);
     setResult(findEntry(buckets, q.trim()));
   }
 
-  function distribute() {
+  function eatLunch() {
     if (!query.trim()) return;
     onDelete(query.trim());
     setResult(null);
@@ -28,40 +28,32 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
 
   return (
     <section className="step">
-      <div className="story-act-card">
-        <span className="story-act-badge">{story.badge}</span>
-        <h2 className="story-act-title">{story.headline}</h2>
-
-        <div className="character-speech-bubble">
-          <div className="character-avatar">{story.character.avatar}</div>
-          <div className="speech-content">
-            <span className="character-name">{story.character.name}</span>
-            <p className="character-dialogue">{story.dialogue}</p>
-          </div>
-        </div>
-
-        <p className="story-narrative-text">{story.narrative}</p>
+      <div className="story-card-modern">
+        <span className="story-badge-neon">{story.badge}</span>
+        <h2 className="story-title-modern">{story.title}</h2>
+        <p className="story-headline-modern">{story.headline}</p>
+        <p className="story-text-simple">{story.storyLine}</p>
       </div>
 
-      <div className="interactive-demo-box">
+      <div className="interactive-card">
         <div className="button-row">
           <button
             type="button"
-            className="button button--ghost"
-            onClick={() => lookupName('Priya')}
+            className="btn-chip"
+            onClick={() => checkLocker('Timmy')}
           >
-            Check Registered: "Priya"
+            Check Present: "Timmy"
           </button>
           <button
             type="button"
-            className="button button--ghost"
-            onClick={() => lookupName('Rohan')}
+            className="btn-chip"
+            onClick={() => checkLocker('Sam')}
           >
-            Check Missing: "Rohan"
+            Check Missing: "Sam"
           </button>
           {result?.entry && (
-            <button type="button" className="button button--danger" onClick={distribute}>
-              Hand Out Kit & Checkout "{result.entry.key}"
+            <button type="button" className="btn-glow btn-glow--rose" onClick={eatLunch}>
+              Eat Lunch & Empty Locker "{result.entry.key}"
             </button>
           )}
         </div>
@@ -69,9 +61,9 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
         {result && (
           <div className={`status-banner ${result.entry ? 'status-banner--success' : 'status-banner--warning'}`}>
             {result.entry ? (
-              <span>✓ Found {result.entry.key}: {result.entry.value} in Shelf #{result.index}!</span>
+              <span>✓ Found {result.entry.key}'s lunchbox ({result.entry.value}) in Locker #{result.index}!</span>
             ) : (
-              <span>Polite Fallback (.get()): "{query}" not registered yet. Zero crash!</span>
+              <span>Polite Fallback (.get()): "Sam" didn't bring lunch today. Zero crash!</span>
             )}
           </div>
         )}
@@ -89,7 +81,7 @@ export default function Step5LookupDelete({ buckets, onDelete, onBack, onContinu
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="See the Big Picture →"
+        continueLabel="See Magic in Real Life →"
       />
     </section>
   );

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { computeHash, longestChain } from '../../lib/hashmap';
-import { COLLISION_CITIZENS, STORY_STEPS } from '../../data/caseStudy';
+import { COLLISION_PRESETS, STORY_STEPS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import StepFooter from '../StepFooter';
 
@@ -8,45 +8,43 @@ export default function Step4Collision({ buckets, onInsert, onBack, onContinue }
   const story = STORY_STEPS[4];
   const [demoRun, setDemoRun] = useState(false);
 
-  const collisionIndex = useMemo(() => computeHash('Amit').index, []);
+  const collisionIndex = useMemo(() => computeHash('Timmy').index, []);
   const maxChain = longestChain(buckets);
 
   function runDemo() {
-    COLLISION_CITIZENS.forEach((c) => onInsert(c.key, c.value));
+    COLLISION_PRESETS.forEach((item) => onInsert(item.key, item.value));
     setDemoRun(true);
   }
 
   return (
     <section className="step">
-      <div className="story-act-card">
-        <span className="story-act-badge">{story.badge}</span>
-        <h2 className="story-act-title">{story.headline}</h2>
-
-        <div className="character-speech-bubble">
-          <div className="character-avatar">{story.character.avatar}</div>
-          <div className="speech-content">
-            <span className="character-name">{story.character.name}</span>
-            <p className="character-dialogue">{story.dialogue}</p>
-          </div>
-        </div>
-
-        <p className="story-narrative-text">{story.narrative}</p>
+      <div className="story-card-modern">
+        <span className="story-badge-neon">{story.badge}</span>
+        <h2 className="story-title-modern">{story.title}</h2>
+        <p className="story-headline-modern">{story.headline}</p>
+        <p className="story-text-simple">{story.storyLine}</p>
       </div>
 
-      <div className="interactive-demo-box">
+      <div className="interactive-card">
         <button
           type="button"
-          className="button button--primary"
+          className="btn-glow btn-glow--purple"
           onClick={runDemo}
           disabled={demoRun}
         >
-          {demoRun ? '✓ Accommodated Both as Roommates' : "▶ File Amit & Mita (Trigger Clash)"}
+          {demoRun ? '✓ Timmy & Tina Accommodated as Roommates' : "▶ Drop Timmy & Tina's Lunch (Trigger Clash)"}
         </button>
+
+        {demoRun && (
+          <div className="status-banner status-banner--info">
+            <strong>Roommates in Locker #{collisionIndex}:</strong> Both Timmy (Pizza) and Tina (Tacos) share Locker #{collisionIndex}. Both lunchboxes are kept completely safe!
+          </div>
+        )}
       </div>
 
       <div className="shelf-section">
         <div className="shelf-section__header">
-          <span>Relief Shelves (Max Roommates: {maxChain})</span>
+          <span>Magic Lockers (Max Roommates per Locker: {maxChain})</span>
         </div>
         <BucketWall
           buckets={buckets}
@@ -58,7 +56,7 @@ export default function Step4Collision({ buckets, onInsert, onBack, onContinue }
       <StepFooter
         onBack={onBack}
         onContinue={onContinue}
-        continueLabel="Check Family Inquiries →"
+        continueLabel="Check Missing Lunchboxes →"
       />
     </section>
   );

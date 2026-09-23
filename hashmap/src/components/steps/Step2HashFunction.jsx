@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { BUCKET_COUNT, computeHash, createBuckets } from '../../lib/hashmap';
-import { CITIZEN_PRESETS, STORY_STEPS } from '../../data/caseStudy';
+import { LUNCHBOX_PRESETS, STORY_STEPS } from '../../data/caseStudy';
 import BucketWall from '../BucketWall';
 import HashWorking from '../HashWorking';
 import StepFooter from '../StepFooter';
@@ -9,7 +9,7 @@ const EMPTY_BUCKETS = createBuckets();
 
 export default function Step2HashFunction({ onBack, onContinue }) {
   const story = STORY_STEPS[2];
-  const [name, setName] = useState('Priya');
+  const [name, setName] = useState('Timmy');
 
   const computation = useMemo(
     () => (name.trim() ? computeHash(name.trim(), BUCKET_COUNT) : null),
@@ -18,44 +18,36 @@ export default function Step2HashFunction({ onBack, onContinue }) {
 
   return (
     <section className="step">
-      <div className="story-act-card">
-        <span className="story-act-badge">{story.badge}</span>
-        <h2 className="story-act-title">{story.headline}</h2>
-
-        <div className="character-speech-bubble">
-          <div className="character-avatar">{story.character.avatar}</div>
-          <div className="speech-content">
-            <span className="character-name">{story.character.name}</span>
-            <p className="character-dialogue">{story.dialogue}</p>
-          </div>
-        </div>
-
-        <p className="story-narrative-text">{story.narrative}</p>
+      <div className="story-card-modern">
+        <span className="story-badge-neon">{story.badge}</span>
+        <h2 className="story-title-modern">{story.title}</h2>
+        <p className="story-headline-modern">{story.headline}</p>
+        <p className="story-text-simple">{story.storyLine}</p>
       </div>
 
-      <div className="interactive-demo-box">
+      <div className="interactive-card">
         <div className="button-row button-row--presets">
-          <span className="preset-label">Pick citizen:</span>
-          {CITIZEN_PRESETS.map((c) => (
+          <span className="preset-label">Pick Student:</span>
+          {LUNCHBOX_PRESETS.map((student) => (
             <button
-              key={c.key}
+              key={student.key}
               type="button"
-              className="button button--chip"
-              onClick={() => setName(c.key)}
+              className="btn-chip"
+              onClick={() => setName(student.key)}
             >
-              {c.key}
+              {student.key}
             </button>
           ))}
         </div>
 
         <div className="field-row">
-          <label htmlFor="citizen-name">Or type name:</label>
+          <label htmlFor="student-name">Or type name:</label>
           <input
-            id="citizen-name"
+            id="student-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Type a name..."
+            placeholder="e.g. Timmy"
             maxLength={20}
           />
         </div>
@@ -71,7 +63,7 @@ export default function Step2HashFunction({ onBack, onContinue }) {
         />
       </div>
 
-      <StepFooter onBack={onBack} onContinue={onContinue} continueLabel="Start Filing Kits →" />
+      <StepFooter onBack={onBack} onContinue={onContinue} continueLabel="Open Locker & File Lunch →" />
     </section>
   );
 }

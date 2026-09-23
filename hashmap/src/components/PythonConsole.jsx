@@ -21,7 +21,7 @@ export default function PythonConsole({ stepId }) {
 
   function handleRun() {
     setIsRunning(true);
-    setTerminalOutput('Running in Python 3.12...\n');
+    setTerminalOutput('Running Python 3.12...\n');
     setTimeout(() => {
       setIsRunning(false);
       setTerminalOutput(stepData.pythonOutput);
@@ -33,7 +33,7 @@ export default function PythonConsole({ stepId }) {
       <div className="python-console__header">
         <div className="python-console__badge">
           <span className="python-icon">🐍</span>
-          <span className="python-console__filename">volunteer_hub.py</span>
+          <span className="python-console__filename">magic_lockers.py</span>
         </div>
         <button
           type="button"
@@ -48,7 +48,7 @@ export default function PythonConsole({ stepId }) {
         {!showQuiz ? (
           <div className="python-console__pane">
             <div className="code-editor-header">
-              <span className="code-editor-title">Python Code (Editable)</span>
+              <span className="code-editor-title">Python Code</span>
               <button
                 type="button"
                 className="btn-small btn-small--run"

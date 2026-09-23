@@ -1,137 +1,134 @@
-// Rich Character-Driven Storytelling Data
+// 5th-Grade Story Dataset: The Magic Lunchbox Locker
 
-export const CHARACTERS = {
-  dev: { name: 'Dev', role: 'Volunteer Coordinator', avatar: '🧑‍💼' },
-  shastri: { name: 'Uncle Shastri', role: 'Elderly Resident (Age 72)', avatar: '👴' },
-  priya: { name: 'Priya', role: 'Young Mother', avatar: '👩‍🦱' },
-  amitMita: { name: 'Amit & Mita', role: 'Arriving Relatives', avatar: '👨‍👩‍👧' },
-  chintu: { name: 'Little Chintu', role: 'Lost Brother', avatar: '🧒' },
-  city: { name: 'The City at Sunset', role: 'Modern Digital Society', avatar: '🌆' }
-};
-
-export const CITIZEN_PRESETS = [
-  { key: 'Priya', value: 'First Aid Pack', category: 'Medical' },
-  { key: 'Aarav', value: 'Ration Kit A', category: 'Food' },
-  { key: 'Kabir', value: 'Baby Care Kit', category: 'Infant' },
-  { key: 'Fatima', value: 'Warm Blanket', category: 'Shelter' },
-  { key: 'Ananya', value: 'Water Voucher', category: 'Water' }
+export const LUNCHBOX_PRESETS = [
+  { key: 'Timmy', value: '🍕 Pizza Box' },
+  { key: 'Aarav', value: '🍜 Noodles' },
+  { key: 'Priya', value: '🥪 Sandwich' },
+  { key: 'Bella', value: '🍔 Burger & Fries' },
+  { key: 'Kavya', value: '🍎 Apple & Juice' }
 ];
 
-export const COLLISION_CITIZENS = [
-  { key: 'Amit', value: 'Emergency Kit A' },
-  { key: 'Mita', value: 'Medical Kit B' }
+export const COLLISION_PRESETS = [
+  { key: 'Timmy', value: '🍕 Pizza Box' },
+  { key: 'Tina', value: '🌮 Tacos' }
 ];
 
 export const STORY_STEPS = {
   1: {
-    badge: 'Act I • The Crisis',
-    character: CHARACTERS.shastri,
-    headline: 'The Endless Line in the Heat',
-    dialogue: '“Beta Dev, I’ve been standing in this 42°C sun for 2 hours. Why must you read thousands of strangers’ names in your paper binder just to find mine?”',
-    narrative: 'Dev is frantically flipping page-by-page through a 1,000-page paper ledger. Every lookup takes 4 whole minutes. Scanning sequentially (O(n)) is crushing the crowd.',
-    pythonSnippet: `# The Slow Way: Scanning a list item by item
-line = ["Rohan", "Fatima", "Shastri", "Priya"]
-"Shastri" in line  # Up to 10,000 checks!`,
-    pythonOutput: `Found Uncle Shastri! (Scanned 10,000 pages — Took 4 minutes)`,
+    badge: 'Act 1 • The Messy Pile',
+    title: 'The Messy Lunch Box Floor',
+    headline: '1,000 lunchboxes thrown in one giant pile!',
+    storyLine: 'Every morning, 1,000 kids dump their lunchboxes in a huge messy pile on the gym floor. At lunchtime, Timmy has to search through all 1,000 boxes one by one. By the time he finds his lunch, lunch break is OVER! 😢',
+    pythonSnippet: `# The Slow Way: A List of 1,000 lunchboxes
+lunch_pile = ["Aarav", "Bella", ..., "Timmy"]
+
+# Searching one-by-one takes up to 1,000 checks!
+"Timmy" in lunch_pile  # Slow O(n) scan`,
+    pythonOutput: `Found Timmy's lunchbox! (Scanned 1,000 boxes — Took all lunch period!)`,
     quiz: {
-      question: 'Why does scanning a paper binder (or a Python list) slow down as the crowd grows?',
-      options: ['Because searching sequentially requires checking items one by one from page 1', 'Because computer screens get hot', 'Because lists can only hold 10 items'],
+      question: 'Why does searching a messy pile (a Python list) take so long when there are 1,000 items?',
+      options: ['Because you have to check items one by one from the start', 'Because lunchboxes are heavy', 'Because lists only hold 5 items'],
       correctIndex: 0,
-      feedback: 'Exactly! Searching a list requires O(n) checks, which fails when scale increases.'
+      feedback: 'Correct! Searching a list requires checking items one by one (Linear Search).'
     }
   },
 
   2: {
-    badge: 'Act II • The Eureka Moment',
-    character: CHARACTERS.dev,
-    headline: 'The Secret of the Coat Check',
-    dialogue: '“A theater coat-check attendant never searches 5,000 hangers! A coat ticket number takes them straight to the exact hanger. What if we calculate a ticket for each name?”',
-    narrative: 'Dev turns each citizen’s name into a ticket using a simple math rule (hash function). No searching required—just jump straight to the shelf!',
-    pythonSnippet: `# Python hash(): calculates an exact shelf slot (0-6)
-name = "Priya"
-shelf = abs(hash(name)) % 7
-print(f"{name} -> Shelf #{shelf}")`,
-    pythonOutput: `Priya -> Shelf #3 (Calculated in 0.00001 seconds!)`,
+    badge: 'Act 2 • The Magic Rule',
+    title: 'The Magic Secret Formula',
+    headline: 'Don’t search the pile—use the Magic Locker rule!',
+    storyLine: 'The Principal installs 7 Magic Lockers (numbered 0 to 6) and makes a rule: Look at your name. Your first letter gives you your magic locker number automatically! Timmy doesn’t touch the pile—he walks straight to Locker #5! 🚀',
+    pythonSnippet: `# The Hash Function: Turn a Name into a Locker Number (0-6)
+name = "Timmy"
+locker_num = abs(hash(name)) % 7
+print(f"{name} -> Magic Locker #{locker_num}")`,
+    pythonOutput: `Timmy -> Magic Locker #5 (Calculated in 0.00001 seconds!)`,
     quiz: {
-      question: 'Why must dictionary keys in Python be permanent/immutable (strings, tuples)?',
-      options: ['So their calculated shelf address never shifts position', 'Because Python dislikes lists', 'To make files smaller'],
+      question: 'How does a Hash Map find your lunchbox so fast?',
+      options: ['It uses a formula to calculate your exact locker number instantly', 'It hires 100 fast robots to search', 'It guesses randomly'],
       correctIndex: 0,
-      feedback: 'Spot on! Immutable keys guarantee a permanent, unchanging shelf slot.'
+      feedback: 'Spot on! The hash function calculates the exact slot address immediately.'
     }
   },
 
   3: {
-    badge: 'Act III • The Python Tool',
-    character: CHARACTERS.priya,
-    headline: 'Meeting the Python Dictionary (`dict`)',
-    dialogue: '“I need a First Aid kit for my daughter. Can you store my record without keeping me waiting in line?”',
-    narrative: 'Dev opens Python. The `dict` connects a Name directly to a Kit (`hub["Priya"] = "First Aid"`). Filing and retrieving take a split second.',
-    pythonSnippet: `hub = {}
-hub["Aarav"] = "Ration Kit A"
-hub["Priya"] = "First Aid"
-print("Priya's Kit:", hub["Priya"])`,
-    pythonOutput: `Priya's Kit: First Aid (O(1) Direct Access!)`,
+    badge: 'Act 3 • Meeting Python',
+    title: 'The Python Dictionary (`dict`)',
+    headline: 'Python connects a Name directly to a Lunchbox!',
+    storyLine: 'In Python, we write this magic locker system as a Dictionary (`dict`). `lockers["Timmy"] = "Pizza Box"` drops Timmy’s pizza into Locker #5 in a split second.',
+    pythonSnippet: `# Create Python Lockers (Dictionary)
+lockers = {}
+
+# File lunchboxes by name in O(1) instant time!
+lockers["Timmy"] = "🍕 Pizza Box"
+lockers["Aarav"] = "🍜 Noodles"
+
+print("Timmy's Lunch:", lockers["Timmy"])`,
+    pythonOutput: `Timmy's Lunch: 🍕 Pizza Box (O(1) Instant Grab!)`,
     quiz: {
-      question: 'What happens when you run `hub["Priya"] = "Upgraded Kit"` if Priya is already registered?',
-      options: ['It updates Priya’s existing shelf value without adding a duplicate key', 'It creates a second Priya entry', 'It throws an error'],
+      question: 'What is Python’s dictionary syntax for storing key-value pairs?',
+      options: ['lockers = {"Timmy": "Pizza Box"}', 'lockers = ["Timmy", "Pizza Box"]', 'lockers = (Timmy = Pizza)'],
       correctIndex: 0,
-      feedback: 'Correct! Dictionary keys are unique, so re-assigning updates the value in place.'
+      feedback: 'Correct! Curly braces {key: value} are Python dictionary syntax.'
     }
   },
 
   4: {
-    badge: 'Act IV • The Roommates',
-    character: CHARACTERS.amitMita,
-    headline: 'Two Families, One Shelf',
-    dialogue: '“Our names have the exact same letters (A-M-I-T & M-I-T-A)! The formula sent us both to Shelf #1. Will one of us be turned away?”',
-    narrative: 'Dev smiles and makes room for both on Shelf #1. In Python, slot clashes (collisions) are natural, and keeping both safely is called separate chaining.',
-    pythonSnippet: `hub["Amit"] = "Emergency Kit"
-hub["Mita"] = "Medical Kit"
-print("Shelf #1:", hub["Amit"], "&", hub["Mita"])`,
-    pythonOutput: `Shelf #1: Emergency Kit & Medical Kit (Zero loss!)`,
+    badge: 'Act 4 • Locker Roommates',
+    title: 'Two Kids, One Locker',
+    headline: 'Timmy & Tina both calculate to Locker #5!',
+    storyLine: 'Uh oh! Both Timmy and Tina start with T, so the magic formula sends both to Locker #5. Does the locker throw Tina’s tacos away? No! Locker #5 holds both boxes side-by-side as roommates! 🌮🍕',
+    pythonSnippet: `# Python handles collisions automatically!
+lockers["Timmy"] = "🍕 Pizza Box"
+lockers["Tina"] = "🌮 Tacos"
+
+print("Locker #5 contents:", lockers["Timmy"], "&", lockers["Tina"])`,
+    pythonOutput: `Locker #5 contents: 🍕 Pizza Box & 🌮 Tacos (Both saved!)`,
     quiz: {
-      question: 'How does Python handle two keys that calculate to the same slot?',
-      options: ['Python resolves collisions safely; both keys stay stored', 'The second key overwrites the first', 'The program crashes'],
+      question: 'What happens when two names calculate to the same locker number?',
+      options: ['Python stores both items safely side-by-side (Collision handling)', 'The second item erases the first', 'The computer explodes'],
       correctIndex: 0,
-      feedback: 'Exactly! Python accommodates both keys seamlessly.'
+      feedback: 'Exactly! Python accommodates both items safely.'
     }
   },
 
   5: {
-    badge: 'Act V • The Reassuring Inquiry',
-    character: CHARACTERS.chintu,
-    headline: '“Is My Sister Here Yet?”',
-    dialogue: '“Bhaiya, I lost my sister Priya in the crowd! Has she registered at Desk 4 yet?”',
-    narrative: 'If Dev searches `hub["Rohan"]` for a missing name, basic Python crashes with a terrifying `KeyError`. Dev uses `hub.get("Rohan", "Not registered yet")` to answer calmly.',
-    pythonSnippet: `hub = {"Priya": "First Aid"}
+    badge: 'Act 5 • Safe Inquiries',
+    headline: '“Is Sam’s Lunch Here Today?”',
+    title: 'Checking Missing Lunch Without Crashing',
+    storyLine: 'If a teacher asks `lockers["Sam"]` for an absent student, basic Python freaks out and crashes (`KeyError`). Using `lockers.get("Sam", "No lunch brought")` answers politely without blowing up the school!',
+    pythonSnippet: `lockers = {"Timmy": "🍕 Pizza Box"}
+
 # Safe lookup with polite default:
-status = hub.get("Rohan", "Not registered yet — check Desk 1")
-print("Rohan:", status)`,
-    pythonOutput: `Rohan: Not registered yet — check Desk 1 (Safe fallback!)`,
+status = lockers.get("Sam", "No lunch brought today")
+print("Sam status:", status)`,
+    pythonOutput: `Sam status: No lunch brought today (Safe & polite fallback)`,
     quiz: {
-      question: 'Why should you use `.get(key, default)` instead of `dict[key]` when looking up unknown user input?',
-      options: ['To safely return a default message instead of crashing with a KeyError', 'To delete the key', 'To sort the dictionary'],
+      question: 'Why should you use `.get(key, default)` when looking up a key that might be missing?',
+      options: ['It returns a friendly default string instead of crashing with a KeyError', 'It deletes the locker', 'It orders new pizza'],
       correctIndex: 0,
-      feedback: 'Correct! .get() gracefully prevents application crashes when keys are missing.'
+      feedback: 'Correct! .get() gracefully prevents app crashes.'
     }
   },
 
   6: {
-    badge: 'Act VI • The Invisible City',
-    character: CHARACTERS.city,
-    headline: 'How Modern Society Runs',
-    dialogue: '“10,000 citizens served with zero line waiting. Every millisecond, millions of humans connect through this exact hash map magic.”',
-    narrative: 'Dev looks out at the sunset. UPI payments (GPay/PhonePe), Uber driver dispatch, Aadhaar ID verification, and WhatsApp chats all use hash maps to make society instant and kind.',
+    badge: 'Act 6 • Magic in Real Life',
+    title: 'How Roblox, Fortnite & YouTube Work',
+    headline: 'The invisible magic running the world!',
+    storyLine: 'By lunchtime, all 1,000 kids grabbed their lunch in 1 second flat! This exact Magic Locker trick is what Roblox, Fortnite, YouTube, and Google Pay use millions of times every single second to load your profile, V-Bucks, and videos instantly!',
     pythonSnippet: `from collections import defaultdict, Counter
-shelters = defaultdict(list)
-shelters["Ward 4"].append("Aarav's Family")
-print(dict(shelters))`,
-    pythonOutput: `{'Ward 4': ["Aarav's Family"]} (Instant Social Logistics)`,
+
+# Group lunchboxes by class automatically
+classes = defaultdict(list)
+classes["5th Grade"].append("Timmy")
+
+print("5th Grade list:", dict(classes))`,
+    pythonOutput: `{'5th Grade': ['Timmy']} (Instant high-speed scale)`,
     quiz: {
-      question: 'What makes `collections.defaultdict` so powerful in Python applications?',
-      options: ['It automatically initializes missing keys (like creating empty lists) when accessed', 'It makes code run on GPU', 'It encrypts data'],
+      question: 'How do video games like Roblox load millions of player profiles so fast?',
+      options: ['They use Hash Maps / Dictionaries for instant O(1) lookups', 'They search players one by one', 'They guess randomly'],
       correctIndex: 0,
-      feedback: 'Spot on! defaultdict eliminates tedious checks before appending to lists or adding counters.'
+      feedback: 'Spot on! Hash maps power every major digital app on Earth.'
     }
   }
 };
