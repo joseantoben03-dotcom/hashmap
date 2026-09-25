@@ -54,9 +54,9 @@ print(f"{name} -> Magic Locker #{locker_num}")`,
   3: {
     badge: 'Act 3 • Meeting Python',
     title: 'The Python Dictionary (`dict`)',
-    headline: 'Python connects a Name directly to a Lunchbox!',
-    storyLine: 'In Python, we write this magic locker system as a Dictionary (`dict`). `lockers["Timmy"] = "Pizza Box"` drops Timmy’s pizza into Locker #5 in a split second.',
-    pythonSnippet: `# Create Python Lockers (Dictionary)
+    headline: 'Python’s Dictionary IS a Hash Map!',
+    storyLine: 'Did you know? A Dictionary (`dict`) in Python IS a Hash Map! Python just calls it a dictionary. Writing `lockers["Timmy"] = "Pizza Box"` drops Timmy’s pizza into Locker #5 in 0.0001 seconds.',
+    pythonSnippet: `# Create Python Lockers (Python's Dictionary IS a Hash Map)
 lockers = {}
 
 # File lunchboxes by name in O(1) instant time!
@@ -64,12 +64,12 @@ lockers["Timmy"] = "🍕 Pizza Box"
 lockers["Aarav"] = "🍜 Noodles"
 
 print("Timmy's Lunch:", lockers["Timmy"])`,
-    pythonOutput: `Timmy's Lunch: 🍕 Pizza Box (O(1) Instant Grab!)`,
+    pythonOutput: `Timmy's Lunch: 🍕 Pizza Box (Python's built-in Hash Map at work!)`,
     quiz: {
-      question: 'What is Python’s dictionary syntax for storing key-value pairs?',
-      options: ['lockers = {"Timmy": "Pizza Box"}', 'lockers = ["Timmy", "Pizza Box"]', 'lockers = (Timmy = Pizza)'],
+      question: 'What is the relationship between a Hash Map and a Python Dictionary (dict)?',
+      options: ['A Python Dictionary IS a Hash Map built right into the Python language', 'They are completely unrelated', 'Hash Maps only work in Java'],
       correctIndex: 0,
-      feedback: 'Correct! Curly braces {key: value} are Python dictionary syntax.'
+      feedback: 'Bingo! In Python, dict is simply Python’s built-in implementation of a Hash Map.'
     }
   },
 
